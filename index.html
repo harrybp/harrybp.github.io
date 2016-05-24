@@ -7,12 +7,22 @@
   <title>Harry BP</title>
   <style>
   .top-padded {
-    margin-top: 100px;
+    margin-top: 50px;
     border-top: black;
   }
   </style>
 </head>
 <body>
+  <script>
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth();
+    var day = date.getDate();
+    var age = year - 1997;
+    if(month < 4 || (month == 4 && day < 23)){
+      age = age - 1;
+    }
+  </script>
   <div class="container">
     <div class="row top-padded"></div>
     <div class="row">
@@ -26,15 +36,16 @@
         </ul>
         <div class="tab-content">
           <div id="me" class="tab-pane fade in active">
-            <h3>Me</h3>
-            <p>Some content.</p>
+            <h3>Harry Bond-Preston (<script> document.write(age)</script>)</h3>
+            <p>Computer Science Student at the University of Manchester.</p>
           </div>
           <div id="uni" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Some content in menu 1.</p>
+            <h3>University Work</h3>
+            <p>First Year Group Project</p>
           </div>
           <div id="cv" class="tab-pane fade">
-            <h3>Menu 2</h3>
+            <h3>CV</h3>
+            <?php include_once("cv/newcv.html");?>
             <p>Some content in menu 2.</p>
           </div>
           <div id="contact" class="tab-pane fade">
