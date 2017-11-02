@@ -389,10 +389,10 @@ function gameOver() {
   initLevel(1);
 }
 
-$("#upBtn").on( "vmousedown",function(){
+$("#upBtn").mousedown(function(){
   ydir = 1;
 });
-$("#upBtn").on( "vmouseup",function(){
+$("#upBtn").mouseup(function(){
   ydir = 0;
 });
 $("#downBtn").on( "vmousedown",function(){
