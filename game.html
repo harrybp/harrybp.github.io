@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/hammerjs/2.0.8/hammer.min.js"></script>
 </head>
 <body>
   <ul>
@@ -30,10 +29,10 @@
 <div class="progress-container" id="progress-container">
 <div class="progress" id="progress"></div>
 </div>
-<table class="buttons hide" id="buttons">
+<table class="buttons" id="buttons">
   <tr>
     <td></td>
-    <td><button id="upBtn">▲</button></td>
+    <td id="upBtn">▲</td>
     <td></td>
   </tr>
   <tr>
@@ -389,30 +388,42 @@ function gameOver() {
   initLevel(1);
 }
 
-$("#upBtn").mousedown(function(){
+
+
+
+var myElement = document.getElementById('upBtn');
+var mcUp = new Hammer(myElement);
+mcUp.on("press", function(){
   ydir = 1;
 });
-$("#upBtn").mouseup(function(){
+mcUp.on("pressup", function(){
   ydir = 0;
 });
-$("#downBtn").on( "vmousedown",function(){
+var myElement = document.getElementById('downBtn');
+var mcDown = new Hammer(myElement);
+mcDown.on("press", function(){
   ydir = 2;
 });
-$("#downBtn").on( "vmouseup",function(){
+mcDown.on("pressup", function(){
   ydir = 0;
 });
-$("#leftBtn").on( "vmousedown",function(){
+var myElement = document.getElementById('leftBtn');
+var mcLeft = new Hammer(myElement);
+mcLeft.on("press", function(){
   xdir = 2;
 });
-$("#leftBtn").on( "vmouseup",function(){
+mcLeft.on("pressup", function(){
   xdir = 0;
 });
-$("#rightBtn").on( "vmousedown",function(){
+var myElement = document.getElementById('rightBtn');
+var mcRight = new Hammer(myElement);
+mcRight.on("press", function(){
   xdir = 1;
 });
-$("#rightBtn").on( "vmouseup",function(){
+mcRight.on("pressup", function(){
   xdir = 0;
 });
+
 $("#pause").on( "vmousedown",function(){
   paused = !paused;
 });
