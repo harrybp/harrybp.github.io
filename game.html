@@ -29,7 +29,7 @@
 <div class="progress-container" id="progress-container">
 <div class="progress" id="progress"></div>
 </div>
-<table class="buttons hide" id="buttons">
+<table class="buttons " id="buttons">
   <tr>
     <td></td>
     <td id="upBtn">▲</td>
@@ -389,10 +389,12 @@ function gameOver() {
 }
 
 
-
+var mySettings = {
+  time: 1
+};
 
 var myElement = document.getElementById('upBtn');
-var mcUp = new Hammer(myElement);
+var mcUp = new Hammer(myElement, mySettings);
 mcUp.on("press", function(){
   ydir = 1;
 });
@@ -400,7 +402,7 @@ mcUp.on("pressup", function(){
   ydir = 0;
 });
 var myElement = document.getElementById('downBtn');
-var mcDown = new Hammer(myElement);
+var mcDown = new Hammer(myElement, mySettings);
 mcDown.on("press", function(){
   ydir = 2;
 });
@@ -408,7 +410,7 @@ mcDown.on("pressup", function(){
   ydir = 0;
 });
 var myElement = document.getElementById('leftBtn');
-var mcLeft = new Hammer(myElement);
+var mcLeft = new Hammer(myElement, mySettings);
 mcLeft.on("press", function(){
   xdir = 2;
 });
@@ -416,7 +418,7 @@ mcLeft.on("pressup", function(){
   xdir = 0;
 });
 var myElement = document.getElementById('rightBtn');
-var mcRight = new Hammer(myElement);
+var mcRight = new Hammer(myElement, mySettings);
 mcRight.on("press", function(){
   xdir = 1;
 });
