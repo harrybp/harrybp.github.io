@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
 </head>
 <body>
   <ul>
@@ -387,31 +388,31 @@ function gameOver() {
   initLevel(1);
 }
 
-$("#upBtn").mousedown(function(){
+$("#upBtn").on( "vmousedown",function(){
   ydir = 1;
 });
-$("#upBtn").mouseup(function(){
+$("#upBtn").on( "vmouseup",function(){
   ydir = 0;
 });
-$("#downBtn").mousedown(function(){
+$("#downBtn").on( "vmousedown",function(){
   ydir = 2;
 });
-$("#downBtn").mouseup(function(){
+$("#downBtn").on( "vmouseup",function(){
   ydir = 0;
 });
-$("#leftBtn").mousedown(function(){
+$("#leftBtn").on( "vmousedown",function(){
   xdir = 2;
 });
-$("#leftBtn").mouseup(function(){
+$("#leftBtn").on( "vmouseup",function(){
   xdir = 0;
 });
-$("#rightBtn").mousedown(function(){
+$("#rightBtn").on( "vmousedown",function(){
   xdir = 1;
 });
-$("#rightBtn").mouseup(function(){
+$("#rightBtn").on( "vmouseup",function(){
   xdir = 0;
 });
-$("#pause").click(function(){
+$("#pause").on( "vmousedown",function(){
   paused = !paused;
 });
 
