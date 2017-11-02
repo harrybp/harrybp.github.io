@@ -4,6 +4,8 @@
 </head>
 <body>
   <ul>
+    <li>Move with arrow keys</li>
+    <li>Press p to pause</li>
     <li>Stay in the green</li>
     <li>Avoid the black and white blocks</li>
     <li>Collect the red blocks</li>
@@ -26,8 +28,33 @@
 <div class="progress-container" id="progress-container">
 <div class="progress" id="progress"></div>
 </div>
+<table class="buttons hide" id="buttons">
+  <tr>
+    <td></td>
+    <td id="upBtn">▲</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td id="leftBtn">◀</td>
+    <td id="pause">❚❚</td>
+    <td id="rightBtn">▶</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td id="downBtn">▼</td>
+    <td></td>
+  </tr>
+</table>
 
 <script type="text/javascript">
+var windowSize = $(window).width();
+var gameSize = (windowSize > 400)? 40 : ((windowSize-50)/10);
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+ console.log("mobile");
+ $("#buttons").removeClass('hide');
+}
+
+console.log(gameSize);
 //Variables
 var size; //Size of game
 var currentSize; //Size of player
@@ -42,30 +69,15 @@ var level = 1;
 var score = 0;
 var roundTime = 1000;
 var paused = false;
-initGame(30, level);
-
-function initGame(sizeToCreate, level) {
-  $("#level").text("Level: "+ level);
-  if(level > 4){
-    gameOver();
-  }
-
-  //Clear obstacles
-  var obstacles = $(".obstacle");
-  for(i = 0 ; i < obstacles.length; i++){
-    var obstacle = obstacles[i];
-    $(obstacle).remove();
-  }
-
+initGame(gameSize);
+initLevel(1);
+function initGame(sizeToCreate) {
   //Initialise variables
   size = sizeToCreate; //Size of game
   currentSize = size; //Size of player
   xdir = 0; //Not moving
   ydir = 0; //Not moving
-  interval = 30; 
-  count = 0;
-  totalcount = 0;
-
+  
   //Build game board
   $("#header").css("width",size*10);
   $("#score-container").css("width",size*5);
@@ -76,13 +88,34 @@ function initGame(sizeToCreate, level) {
   $("#progress-container").width(size*10);
   $("#wrapper").css("width", size*10);
   $("#wrapper").css("height", size*10);
+  $("#buttons").width(size*10);
+  $("#buttons").height(size*10);
+}
+
+function initLevel(level){
+  $("#level").text("Level: "+ level);
+  if(level > 4){
+    gameOver();
+  }
+  interval = 30; 
+  count = 0;
+  totalcount = 0;
+
+  //Clear obstacles
+  var obstacles = $(".obstacle");
+  for(i = 0 ; i < obstacles.length; i++){
+    var obstacle = obstacles[i];
+    $(obstacle).remove();
+  }
 
   //Build safe zone and place player
   switch(level){
     case 1:
+      console.log(size*8);
       $("#safe").css("width", size*10);
       $("#safe").css("height", size*3);
       $("#safe").css("top", size*7);
+      $("#safe").css("left", 0);
       $("#box").css("top",  size * 8);
       $("#box").css("left", size * 5);
       safeMove = false;
@@ -129,7 +162,7 @@ setInterval(function(){
     //Advance a level if progress complete
     if(totalcount > roundTime){
       level ++;
-      initGame(size, level);
+      initLevel(level);
     }
 
     //Create new obstacle every interval
@@ -350,9 +383,38 @@ function gameOver() {
   }
 
   //Display game score and restart
-  alert("Game Over! Score: " + score);
-  initGame(30,1);
+  //alert("Game Over! Score: " + score);
+  initLevel(1);
 }
+
+$("#upBtn").mousedown(function(){
+  ydir = 1;
+});
+$("#upBtn").mouseup(function(){
+  ydir = 0;
+});
+$("#downBtn").mousedown(function(){
+  ydir = 2;
+});
+$("#downBtn").mouseup(function(){
+  ydir = 0;
+});
+$("#leftBtn").mousedown(function(){
+  xdir = 2;
+});
+$("#leftBtn").mouseup(function(){
+  xdir = 0;
+});
+$("#rightBtn").mousedown(function(){
+  xdir = 1;
+});
+$("#rightBtn").mouseup(function(){
+  xdir = 0;
+});
+$("#pause").click(function(){
+  paused = !paused;
+});
+
 </script>
 </body>
 <style type="text/css">
@@ -396,6 +458,7 @@ function gameOver() {
   }
   .leftObstacle {
     background-color: white;
+    border: 1px solid black;
   }
   .healthObstacle {
     background-color: red !important;
@@ -421,5 +484,15 @@ function gameOver() {
     border-right: 20px solid #000;
     border-left: 20px solid #000;
     position: absolute;
-}
+  }
+
+  .buttons {
+    text-align: center;
+    font-size: 500%;
+  }
+
+  .hide {
+    visibility: hidden;
+  }
+
 </style>
