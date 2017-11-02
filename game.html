@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/hammerjs/2.0.8/hammer.min.js"></script>
 </head>
 <body>
   <ul>
+    <li id="hs"></li>
     <li>Move with arrow keys</li>
     <li>Press p to pause</li>
     <li>Stay in the green</li>
@@ -29,31 +29,16 @@
 <div class="progress-container" id="progress-container">
 <div class="progress" id="progress"></div>
 </div>
-<table class="buttons hide" id="buttons">
-  <tr>
-    <td></td>
-    <td id="upBtn">▲</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td id="leftBtn">◀</td>
-    <td id="pause">❚❚</td>
-    <td id="rightBtn">▶</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td id="downBtn">▼</td>
-    <td></td>
-  </tr>
-</table>
+
 
 <script type="text/javascript">
 var windowSize = $(window).width();
-var gameSize = (windowSize > 400)? 40 : ((windowSize-50)/10);
+var gameSize = 40;
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
  console.log("mobile");
- $("#buttons").removeClass('hide');
 }
+var highscore = localStorage.getItem("highscore");
+$("#hs").text("Your highscore is: " + highscore);
 
 console.log(gameSize);
 //Variables
@@ -112,7 +97,6 @@ function initLevel(level){
   //Build safe zone and place player
   switch(level){
     case 1:
-      console.log(size*8);
       $("#safe").css("width", size*10);
       $("#safe").css("height", size*3);
       $("#safe").css("top", size*7);
@@ -382,53 +366,22 @@ function gameOver() {
     var obstacle = obstacles[i];
     $(obstacle).remove();
   }
+  var highscore = localStorage.getItem("highscore");
 
+  if(highscore !== null){
+    if (score > highscore) {
+        localStorage.setItem("highscore", score);      
+    }
+  }
+  else{
+    localStorage.setItem("highscore", score);
+  }
   //Display game score and restart
   //alert("Game Over! Score: " + score);
-  initLevel(1);
+  initGame(gameSize);
 }
 
 
-var mySettings = {
-  time: 1
-};
-
-var myElement = document.getElementById('upBtn');
-var mcUp = new Hammer(myElement, mySettings);
-mcUp.on("press", function(){
-  ydir = 1;
-});
-mcUp.on("pressup", function(){
-  ydir = 0;
-});
-var myElement = document.getElementById('downBtn');
-var mcDown = new Hammer(myElement, mySettings);
-mcDown.on("press", function(){
-  ydir = 2;
-});
-mcDown.on("pressup", function(){
-  ydir = 0;
-});
-var myElement = document.getElementById('leftBtn');
-var mcLeft = new Hammer(myElement, mySettings);
-mcLeft.on("press", function(){
-  xdir = 2;
-});
-mcLeft.on("pressup", function(){
-  xdir = 0;
-});
-var myElement = document.getElementById('rightBtn');
-var mcRight = new Hammer(myElement, mySettings);
-mcRight.on("press", function(){
-  xdir = 1;
-});
-mcRight.on("pressup", function(){
-  xdir = 0;
-});
-
-$("#pause").on( "vmousedown",function(){
-  paused = !paused;
-});
 
 </script>
 </body>
