@@ -5,7 +5,7 @@
 <body>
   <p id="xInfo"></p>
   <p id="yInfo"></p>
-  <p id="info"></p>
+  <p id="info">Press p to play</p>
   <div class="container" id='cont'>
     <div class="foreground" id="fg"></div>
     <div class="border topside top" id="tb"></div>
@@ -16,6 +16,12 @@
   </div>
   
   <script>
+  /*
+  * TODO:
+  *   Graphics: Make walls fade to black so not obvious its one layer thin
+  *             Make player skin
+  *   Gameplay: Add enemies to avoid, some way of attacking them
+  */
   var colours = ["", "url('brick.png')", "url('stone.png')"];
   var map = [
     [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 ],
@@ -235,7 +241,12 @@
         if(key == 38){
           console.log("Jump " + jumpCount);
           if(jumpCount < 2){
-            gravSpeed = -jumpSpeed;
+            if(jumpCount < 1){
+              gravSpeed = -jumpSpeed;
+            } else {
+              gravSpeed = -jumpSpeed+2;
+            }
+            
             jumpCount ++;
           }
         }
@@ -246,6 +257,7 @@
         }
         if(key == 80){
           paused = !paused;
+          $("#info").text("Paused");
         }
       }
 
@@ -281,7 +293,6 @@
     }
 
     function loadRow(number, position){
-
       if(number < map.length && number >= 0){
         var row = map[number];
 
