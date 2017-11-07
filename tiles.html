@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <p id="xInfo"></p>
+  <p id="yInfo"></p>
+  <p id="info"></p>
+  <div class="container" id='cont'>
+    <div class="foreground" id="fg"></div>
+    <div class="border topside top" id="tb"></div>
+    <div class="border side left" id="lb"></div>
+    <div class="player" id="p"></div>
+    <div class="border side right" id="rb"></div>
+    <div class="border topside bottom" id="bb"></div>
+  </div>
+  
+  <script>
+  var colours = ["", "url('brick.png')", "url('stone.png')"];
+  var map = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ],
+    [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0 ],
+    [0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0 ],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0 ],
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 ],
+    [1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1 ],
+    [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+    [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 ],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1 ],
+    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1 ],
+    [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
+    [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
+    [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  ];
+    var tileCount = 0;
+    var gameSize = 160;
+    var gridSize = 8;
+    var playerSize = 20;
+    var gravity = 2;
+    var frameLength = 30;
+    var paused = true;
+    var gravSpeed = 0;
+    var jumpCount = 0;
+    var jumpSpeed = 20;
+    var xSpeed = 0;
+    var playerPos = 105;
+    currentX = 0;
+    var playerSpeed = 5;
+    var xPosition = 0;
+    var xPositionOffset = 0;
+    var yPosition = 0;
+    var yPositionOffset = 0;
+    var gridDimension = parseInt(gameSize/gridSize);
+    var start = null;
+    var col = 0;
+    var rowNo =0;
+    var colLoaded =0;
+    var rowLoaded = 0;
+    init();
+    function init(){
+      $("#cont").height(gameSize);
+      $("#cont").width(gameSize);
+      $("#p").height(playerSize);
+      $("#p").width(playerSize);
+      $("#p").css("left", playerPos);
+      $("#rb").css("left", gameSize);
+      $("#lb").height(gameSize+200);
+      $("#rb").height(gameSize+200);
+      $("#tb").width(gameSize+100);
+      $("#bb").width(gameSize+100);
+      $("#bb").css("top", gameSize);
+      //$("#lb").css("top", -100);
+      $("#fg").width(gameSize);
+      $("#fg").height(gameSize);
+      $("#fg").css("background-size", gameSize + "px " + gameSize + "px");
+      for(x = 0; x < gridSize + 1; x++){
+        loadCol(x,x*gridDimension);
+      }
+    }
+
+
+
+    window.requestAnimationFrame(step);
+    function step(timestamp){
+      if(!start) start = timestamp;
+      var progress = timestamp - start;
+      if(progress > frameLength){
+        start = timestamp;
+        if(!paused){
+          updateFrame();
+        }
+      }
+      window.requestAnimationFrame(step);
+    }
+ 
+
+    function updateFrame(){
+      console.log("frame");
+      var pos = $("#p").position();
+      var top = pos.top;
+      yAccelerate(top);
+      col = Math.floor(xPosition/gridDimension);
+      rowNo = Math.floor(yPosition/gridDimension);
+      panMap();
+      $("#xInfo").text("x: " + xPosition + ", col: " + col );
+      $("#yInfo").text("y: " + yPosition + ", row: " + rowNo);
+      $("#info").text(tileCount + " tiles loaded");
+    }
+
+
+
+    function panMap(){
+        var platforms = $(".platform");
+        var top = $("#p").position().top;
+        var moveAmount = null;
+        for(i = 0; i < platforms.length; i++){
+          var p = platforms[i];
+          var pLeftOriginal = $(p).position().left;
+          var pTop = $(p).position().top;
+          var pWidth = $(p).width();
+          var pHeight = $(p).height();
+          var newPLeft = pLeftOriginal + xSpeed;
+          if(newPLeft < playerPos + playerSize && newPLeft + pWidth > playerPos && top + playerSize > pTop && top < pTop + pHeight){
+            if(xSpeed < 0){
+              newPLeft = playerPos + playerSize;
+            } else {
+              newPLeft = playerPos - pWidth;
+            }
+          } 
+          if(moveAmount == null || (xSpeed < 0 && newPLeft - pLeftOriginal > moveAmount) || (xSpeed > 0 && newPLeft - pLeftOriginal < moveAmount)){
+            moveAmount = newPLeft - pLeftOriginal;
+          }
+        }
+
+      for(i = 0; i < platforms.length; i++){
+        var p = platforms[i];
+        var pLeft = $(p).position().left + moveAmount;
+        $(p).css("left", pLeft);
+      }
+      if(platforms.length < 1){
+        //console.log("Emergency");
+
+        moveAmount = xSpeed;
+      }
+      xPosition-= moveAmount;
+      xPositionOffset -= moveAmount;
+      while(xPositionOffset > gridDimension){
+        xPositionOffset-=gridDimension;
+        loadCol(col+gridSize, gameSize-xPositionOffset);
+        deleteTiles();
+      }
+      while(xPositionOffset < -gridDimension){
+        xPositionOffset+=gridDimension;
+        loadCol(col, -(xPositionOffset%gridDimension));
+        deleteTiles();
+      }
+      while(yPositionOffset > gridDimension){
+          var test = Math.floor(yPositionOffset/gridDimension)-1;
+          yPositionOffset-=gridDimension;
+          loadRow(rowNo+gridSize-test, gameSize-yPositionOffset);
+          deleteTiles();
+        }
+      while(yPositionOffset < -gridDimension){
+        var test = Math.floor(-yPositionOffset/gridDimension)-1;
+        yPositionOffset+=gridDimension;
+        loadRow(rowNo-test, -gridDimension-(yPositionOffset%gridDimension));
+        deleteTiles();
+      }
+    }
+
+    function yAccelerate(top){
+      gravSpeed+=gravity;
+      var platforms = $(".platform");
+      var moveAmount = null;
+
+      //Check for clash with platforms
+      for(i = 0; i < platforms.length; i++){
+        var p = platforms[i];
+        var pLeft = $(p).position().left;
+        var pTopOriginal = $(p).position().top;
+        var pWidth = $(p).width();
+        var pHeight = $(p).height();
+        var newPTop = pTopOriginal - gravSpeed;
+        if(pLeft < playerPos + playerSize && pLeft + pWidth > playerPos && top + playerSize > newPTop && top < newPTop + pHeight){
+            if(gravSpeed > 0){//player falling, platforms rising
+              var newPTop = top + playerSize;
+            } else if(gravSpeed < 0){
+              var newPTop = top - pHeight;
+            }
+          }
+          if(moveAmount== null || (gravSpeed > 0 && newPTop - pTopOriginal > moveAmount) || (gravSpeed < 0 && newPTop - pTopOriginal < moveAmount) ){
+            moveAmount = newPTop - pTopOriginal;
+          }
+        }
+        if(platforms.length < 1){
+          console.log("Emergency");
+          moveAmount = -gravSpeed;
+        }
+        if(moveAmount != -gravSpeed){
+          //console.log("bam");
+          gravSpeed = 0;
+          jumpCount = 0;
+        }
+        for(i = 0; i < platforms.length; i++){
+          var p = platforms[i];
+          var pTop = $(p).position().top;
+          $(p).css("top", pTop + moveAmount);
+        }
+        
+        yPosition-=moveAmount;
+        yPositionOffset-=moveAmount;
+    }
+
+
+
+    window.onkeydown = function(e) {
+        var key = e.keyCode ? e.keyCode : e.which;
+
+        if(key == 38){
+          console.log("Jump " + jumpCount);
+          if(jumpCount < 2){
+            gravSpeed = -jumpSpeed;
+            jumpCount ++;
+          }
+        }
+        if (key == 39) {
+          xSpeed = -playerSpeed; //Right
+        }else if (key == 37) {
+          xSpeed = playerSpeed; //Left
+        }
+        if(key == 80){
+          paused = !paused;
+        }
+      }
+
+    window.onkeyup = function(e) {
+      var key = e.keyCode ? e.keyCode : e.which;
+      if(key == 39 || key == 37){
+        xSpeed = 0;
+      }
+      if(key == 84){
+        loadRow(11, gameSize);
+      }
+    }
+    function createPlatform(width, height, xOffset, yOffset, image){
+      tileCount++;
+      var platform = document.createElement("div");
+      $(platform).addClass("platform");
+      $(platform).width(width);
+      $(platform).height(height);
+      $(platform).css("left", xOffset);
+      $(platform).css("top", yOffset);
+      $(platform).css("background-image", image);
+      $("#cont").append(platform);
+      prevPlatform = platform;
+    }
+
+    function loadCol(number, position){
+      console.log("Loadcol: " + number);
+      for(i = -2; i < gridSize+3; i++){
+        if(number >= 0 && number < map[0].length && i+rowNo < map.length && i+rowNo >= 0 && map[i+rowNo][number] != 0){
+          createPlatform(gridDimension, gridDimension, position, (i+rowNo)*gridDimension-yPosition, colours[map[i+rowNo][number]]);
+        }
+      }
+    }
+
+    function loadRow(number, position){
+
+      if(number < map.length && number >= 0){
+        var row = map[number];
+
+        for(i = -2; i < gridSize+3; i++){
+          if(i+col < row.length && i+col >= 0 && row[i+col] != 0){
+            createPlatform(gridDimension, gridDimension, (i+col)*gridDimension-xPosition, position, colours[row[i+col]]);
+          }
+        }
+      } else {
+        console.log('not done');
+      }
+    }
+    
+    function deleteTiles(){
+      var platforms = $(".platform");
+      for(i= 0; i < platforms.length; i++){
+        var p = platforms[i];
+        var left = parseInt($(p).position().left);
+        var top = parseInt($(p).position().top);
+        if(left < -(2*gridDimension)||  left > gameSize + (1*gridDimension) || top < -(2*gridDimension) || top > gameSize + (1*gridDimension)){
+          $(p).remove();
+          tileCount--;
+        }
+      }
+    }
+
+    
+  </script>
+</body>
+<style>
+.container {
+  margin: 100px;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border: 0px solid red;
+  }
+
+  .foreground {
+    background-image: url("torchLight.png");
+    height:300px;
+    width:300px;
+    position: absolute;
+    
+    z-index: 90;
+  }
+  .player {
+    position: absolute;
+    width:20px;
+    height: 20px;
+    background-color: blue;
+    left: 105px;
+    top: 105px;
+  }
+  .platform {
+    position: absolute;
+    background-color: black;
+    height: 20px;
+    background-image: url("stone.png");
+  }
+  .border {
+    position: absolute;
+    background-color: black;
+    z-index: 3;
+  }
+  .side {
+    height: 250px;
+    width: 100px;
+    top: -100px;
+  }
+  .topside {
+    height: 50px;
+    width: 250px;
+
+  }
+  .left {
+    left: -100px;
+  }
+  .right {
+    left: 250px;
+    width: 100px;
+  }
+  .top {
+    top: -100px;
+    left: -50px;
+    height:100px;
+    
+  }
+  .bottom {
+    left: -50px;
+    top: 200px;
+    height: 100px;
+  }
+  .minimap {
+    width: 50px;
+    height: 50px;
+    background-image: url("Untitled.bmp");
+    background-size: 50px 50px;
+  }
+  p {
+    z-index: 1;
+    color: white;
+  }
+  body {
+    background-color: black;
+  }
+</style>
