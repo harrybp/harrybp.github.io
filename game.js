@@ -85,7 +85,6 @@
           var bgColor = bodyStyle.backgroundColor;
           borders[i].style.backgroundColor = bgColor;
         }
-
       }
     }
     var borders;
@@ -630,7 +629,7 @@
               activeCreatureCount--;
             }
           } else {
-            tiles[i].tile.parentNode.removeChild(tiles[i].tile);
+            container.removeChild(tiles[i].tile);
             tiles.splice(i,1);
             tileCount--;
           }
