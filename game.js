@@ -207,7 +207,7 @@
         cont.appendChild(heart);
         hearts[i] = heart;
       }
-
+      bottomBorder.innerHTML = "&larr; Move &rarr;<br>&uarr; Jump / Double-Jump &uarr;<br>&darr; Duck &darr;<br>S Shoot | Pause P";
       //Initalise Position
       xPosition = startX;
       yPosition = startY;
