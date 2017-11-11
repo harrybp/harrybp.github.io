@@ -39,7 +39,8 @@
     //Game properties
     
     var gameSize, jumpSpeed, creatureJumpSpeed, gridDimension, playerPosX, playerPosY, playerSpeed, creatureSpeed, startX, startY, arrowSpeed, arrowHeight, playerWidth, playerHeight, gravity;
-    var deleteDist = 5;
+    var xDeleteDist = 2;
+    var yDeleteDist = 5;
     var renderDist = 5;
     var frameLength = 30;
     var damageTimeout = 25;
@@ -84,12 +85,14 @@
           var bodyStyle = window.getComputedStyle(document.body, null);
           var bgColor = bodyStyle.backgroundColor;
           borders[i].style.backgroundColor = bgColor;
+          bottomBorder.textContent = "";
         }
       }
     }
     var borders;
     //Game state
     var tileCount, paused ,gravSpeed, jumpCount, xSpeed, xPosition , xPositionOffset, yPosition, yPositionOffset, col, rowNo, tileLefts, tileTops, moved, crouched, faceDirection, arrowCount, creatureCount, activeCreatureCount, creatures, tiles, hearts, health, dead, damageTime, score, bottomBorder, player, container;
+    var pause = [];
 
     function tileObj(tile, left, top, height, isArrow, direction, isCreature, id){
       this.tile = tile;
@@ -260,13 +263,16 @@
       }
       if(activeCreatureCount > 0){
         moveCreatures();
+        yDeleteDist = 5;
+      } else {
+        yDeleteDist = 2;
       }
       yAccelerate();
       col = Math.floor(xPosition/gridDimension);
       rowNo = Math.floor(yPosition/gridDimension);
-      if(xSpeed != 0){
+      //if(xSpeed != 0){
         panMap();
-      }
+      //}
       
       //Print stats
       if(logging){
@@ -383,8 +389,12 @@
           moveAmount = -gravSpeed;
         }
         if(moveAmount != -gravSpeed){//Clash has occured
+          if(gravSpeed > 0){
+            jumpCount = 0;
+          }
           gravSpeed = 0;
-          jumpCount = 0;
+          
+          
         }
         if(moveAmount != 0){//Move tiles
           moved = true;
@@ -433,9 +443,16 @@
           if(!dead){
             paused = !paused;
             if(paused){
-              bottomBorder.textContent = "Paused";
+              if(logging){
+                bottomBorder.textContent += " Paused";
+              }
+              pause[0] = createTile(3*gridDimension, 10*gridDimension, 3*gridDimension, 3*gridDimension, "", true);
+              pause[1] = createTile(3*gridDimension, 10*gridDimension, 10*gridDimension, 3*gridDimension, "", true);
+              pause[0].style.backgroundColor = "white";
+              pause[1].style.backgroundColor = "white";
             } else {
-              bottomBorder.textContent = "";
+              pause[0].parentNode.removeChild(pause[0]);
+              pause[1].parentNode.removeChild(pause[1]);
             }
             
           } else {
@@ -478,7 +495,7 @@
         }
     }
 
-    function createTile(width, height, xOffset, yOffset, image){
+    function createTile(width, height, xOffset, yOffset, image, dontAdd){
       var tile = document.createElement("div");
       var rand = Math.floor(Math.random() * 3);
       var bgColor = "#666666";
@@ -489,8 +506,12 @@
       }  
       tile.style.cssText += "z-index: 2; position: absolute; background-color:" + bgColor + "; width: " + width + "px; height: " + height + "px; left: " + xOffset + "px; top: " + yOffset + "px;";    
       container.appendChild(tile);
-      tiles[tileCount] = new tileObj(tile, xOffset, yOffset, height, false, 0, false, 0);
-      tileCount++;
+      if(dontAdd){
+        return tile;
+      } else {
+        tiles[tileCount] = new tileObj(tile, xOffset, yOffset, height, false, 0, false, 0);
+        tileCount++;
+      }
     }
 
     function loadCol(number, position){
@@ -622,7 +643,7 @@
 
         var left = tiles[i].left;
         var top = tiles[i].top;
-        if(left < -(deleteDist*gridDimension)||  left > gameSize + ((deleteDist-1)*gridDimension) || top < -(deleteDist*gridDimension) || top > gameSize + ((deleteDist-1)*gridDimension)){
+        if(left < -(xDeleteDist*gridDimension)||  left > gameSize + ((xDeleteDist-1)*gridDimension) || top < -(yDeleteDist*gridDimension) || top > gameSize + ((yDeleteDist-1)*gridDimension)){
           if(tiles[i].isCreature){
             if(!creatures[tiles[i].id].frozen && creatures[tiles[i].id].health > 0){
               creatures[tiles[i].id].frozen = true;
@@ -670,14 +691,18 @@
               creatures[tiles[j].id].tile.style.backgroundColor = "rgb(" + (255 - (40*creatures[tiles[j].id].health)) + ",142,61)";
               if(creatures[tiles[j].id].health < 1){
                 tiles[j].tile.parentNode.removeChild(tiles[j].tile);
+                tiles.splice(j, 1);
+                tileCount--;
+                i--;
                 activeCreatureCount--;
+                creatureCount--;
+                break;
               }
             }
           }
         }
 
         if(clash || tiles[i].left > 1000 || tiles[i].left < -1000){
-          console.log("removed");
           tiles[i].tile.parentNode.removeChild(tiles[i].tile);
           tiles.splice(i, 1);
           arrowCount--;
