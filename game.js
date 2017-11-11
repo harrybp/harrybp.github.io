@@ -93,6 +93,7 @@
     //Game state
     var tileCount, paused ,gravSpeed, jumpCount, xSpeed, xPosition , xPositionOffset, yPosition, yPositionOffset, col, rowNo, tileLefts, tileTops, moved, crouched, faceDirection, arrowCount, creatureCount, activeCreatureCount, creatures, tiles, hearts, health, dead, damageTime, score, bottomBorder, player, container;
     var pause = [];
+    var headTile;
 
     function tileObj(tile, left, top, height, isArrow, direction, isCreature, id){
       this.tile = tile;
@@ -105,11 +106,14 @@
       this.id = id;
     }
 
-    function creature(tile, cGravSpeed, health, frozen){
+    function creature(tile, head, eye, cGravSpeed, health, frozen, direction){
       this.tile = tile;
       this.cGravSpeed = cGravSpeed;
       this.health = health;
       this.frozen = frozen;
+      this.head = head;
+      this.eye = eye;
+      this.direction = direction;
     }
 
     window.onload = function(){
@@ -161,9 +165,19 @@
 
       //Player
       player = document.createElement("div");
-      player.style.cssText += "position: absolute; background-color: blue; height: " + playerHeight + "px; width: " + playerWidth + "px; left: " + playerPosX + "px; top: " + playerPosY + "px;";
+      player.style.cssText += "position: absolute; background-color: #3f5996; height: " + playerHeight + "px; width: " + playerWidth + "px; left: " + playerPosX + "px; top: " + playerPosY + "px; border-width: "+ (playerWidth/0.9) + "px " + (playerWidth/3) + "px "+ (playerWidth/1.5) + "px " + (playerWidth/3) + "px; box-sizing: border-box; border-color:#7f97d1; border-style: solid;";
+      var head = document.createElement("div");
+      var x = playerWidth/2.4;
+      head.style.cssText += "position: absolute; left:"+(-(playerWidth/3))+"px; top:"+ -(playerWidth/0.9)+ "px;border-width: "+ x + "px 0px "+ x + "px "+ x +"px; width: "+playerWidth +"px; height: "+ playerWidth + "px; border-style: solid; border-color: #9e8b00 #9e8b00 #ffe9d3 #9e8b00; box-sizing: border-box; background-color: #ffe9d3;"
+      player.appendChild(head);
+      headTile = head;
       cont.appendChild(player);
-      console.log(bgColor);
+      
+    
+
+    
+
+
       //Borders
       var borderCSS = "position: absolute; background-color:" + bgColor + "; z-index: 3; color: white;";
       var sideCSS = "height: " + (gameSize*2 + 122) + "px; width: " + 1000 + "px; top: " + (-(gameSize/2)) + "px;";
@@ -428,9 +442,17 @@
         } 
         if (key == 39) {
           xSpeed = -playerSpeed; //-->Right
+          if(faceDirection == -1){
+            var x = playerWidth/2.4;
+            headTile.style.cssText += "border-width: "+x+"px 0px "+x+"px "+x+"px;";
+          }
           faceDirection = 1;
         }else if (key == 37) {
           xSpeed = playerSpeed; //<--Left
+          if(faceDirection == 1){
+            var x = playerWidth/2.4;
+            headTile.style.cssText += "border-width: "+x+"px "+x+"px "+x+"px 0px;";
+          }
           faceDirection = -1;
         }
         if(key == 40 && !crouched){//Down\/
@@ -467,7 +489,10 @@
           
         }
         if(key == 68){
-          die();
+          if(logging){
+            die();
+          }
+          
         }
       }
 
@@ -542,25 +567,32 @@
     }
 
     
+    
     function renderCreatures(){
       for(j = 0; j < map.length; j++){
         for(i = 0; i < map[j].length; i++){
           if(map[j][i] >= 5){
-            createTile(gridDimension, gridDimension, (i*gridDimension)-xPosition, (j*gridDimension)-yPosition, "");
-            tiles[tileCount-1].top -= gridDimension;
-            tiles[tileCount-1].isCreature = true;
-            tiles[tileCount-1].id = map[j][i];
-            tiles[tileCount-1].tile.style.top = tiles[tileCount-1].top + "px";
-            tiles[tileCount-1].tile.style.backgroundColor = "rgb(55,142,61)";
-            tiles[tileCount-1].tile.style.height = (2*gridDimension) +"px";
-            tiles[tileCount-1].height = (2* gridDimension);
-            creatures[map[j][i]]= new creature(tiles[tileCount-1].tile, 0, 5, true);
+            var xOffset = ((i*gridDimension)-xPosition);
+            var yOffset = (((j-1)*gridDimension)-yPosition);
+            var newCreature = createTile(gridDimension, gridDimension, (i*gridDimension)-xPosition, ((j-1)*gridDimension)-yPosition, "", true);
+            newCreature.style.cssText += "border-color:rgb(55,142,61); border-style: solid; box-sizing: border-box; background-color: #7fba6f; border-width: 0px "+gridDimension/3 + "px "+gridDimension/3 +"px "+gridDimension/3 +"px;";
+            var head = document.createElement("div");
+            head.style.cssText += ";position: absolute; z-index: 4; width: " + playerWidth + "px; height: " + playerWidth + "px; background-color: #73ba60; left: " + -(playerWidth/3) + "px; border-bottom: 2px solid green";//change this
+            var eye = document.createElement("div");
+            eye.style.cssText += "border-width: "+gridDimension/12+"px "+gridDimension/8+"px "+gridDimension/12+"px "+gridDimension/24+"px; top: "+gridDimension/4+"px;left: "+gridDimension/12+"px;height: "+gridDimension/3+"px;width: " + gridDimension/3 + "px;border-color: white;border-style: solid;box-sizing: border-box;background-color: black;position: absolute;"
+            
+            head.appendChild(eye);
+            newCreature.appendChild(head);
+            newCreature.style.height = (2*gridDimension) +"px";
+            tiles[tileCount] = new tileObj(newCreature, xOffset, yOffset, 2*gridDimension, false, 0, true, map[j][i]);
+            tileCount++;
+            creatures[map[j][i]]= new creature(newCreature, head, eye, 0, 5, true, -1);
             creatureCount++;
           }
         }
       }
     }
-
+    
     function moveCreatures(){
       for(i = 0; i < tileCount; i++){
         if(!tiles[i].isCreature || creatures[tiles[i].id].frozen ){
@@ -568,10 +600,18 @@
         }
         var intendsToJump = false;
         var jumpConfirmed = false;
-        var move = -creatureSpeed;
+        var move = creatures[tiles[i].id].direction * creatureSpeed;
         if(tiles[i].left < playerPosX){
-          move = creatureSpeed;
-        } 
+          if(creatures[tiles[i].id].direction != 1){
+            creatures[tiles[i].id].direction = 1;
+            creatures[tiles[i].id].eye.style.cssText += "border-width: "+gridDimension/12+"px "+gridDimension/24+"px "+gridDimension/12+"px "+gridDimension/8+"px; left: "+gridDimension/2+"px;"
+          }
+        } else {
+          if(creatures[tiles[i].id].direction != -1){
+            creatures[tiles[i].id].direction = -1;
+            creatures[tiles[i].id].eye.style.cssText += "border-width: "+gridDimension/12+"px "+gridDimension/8+"px "+gridDimension/12+"px "+gridDimension/24+"px; left: "+gridDimension/12+"px;"
+          }
+        }
         var creature = tiles[i];
         var newLeft = tiles[i].left + move;
         for(j = 0; j < tileCount; j++){
@@ -661,10 +701,12 @@
     function shoot(){
       var arrow = document.createElement("div");
       var left = playerPosX + (faceDirection*playerWidth) + playerWidth;
+      var borderCSS = "border-left: " + (gridDimension/6) + "px solid black;";
       if(faceDirection == 1){
         left -= playerWidth;
+        var borderCSS = "border-right: " + (gridDimension/6) + "px solid black;";
       }
-      arrow.style.cssText += "z-index: 2; position: absolute; background-color: #666666; width: " + (gridDimension/2) + "px; height: " + arrowHeight + "px; left: " + left + "px; top: " + (playerPosY + playerWidth) + "px;";
+      arrow.style.cssText += "z-index: 2; position: absolute; background-color: white; width: " + (gridDimension/2) + "px; height: " + arrowHeight + "px; left: " + left + "px; top: " + (playerPosY + playerWidth) + "px;" + borderCSS;
       container.appendChild(arrow);
       tiles[tileCount] = new tileObj(arrow, left, playerPosY + playerWidth, arrowHeight, true, faceDirection, false, 0);
       tileCount++;
@@ -688,7 +730,8 @@
             if(tiles[j].isCreature && creatures[tiles[j].id].health > 0){
               creatures[tiles[j].id].health -= 1;
               var val = (255 - (40*creatures[tiles[j].id].health));
-              creatures[tiles[j].id].tile.style.backgroundColor = "rgb(" + (255 - (40*creatures[tiles[j].id].health)) + ",142,61)";
+              creatures[tiles[j].id].tile.style.borderColor = "rgb(" + (255 - (40*creatures[tiles[j].id].health)) + ",142,61)";
+              creatures[tiles[j].id].head.style.borderColor = "rgb(" + (255 - (40*creatures[tiles[j].id].health)) + ",142,61)";
               if(creatures[tiles[j].id].health < 1){
                 tiles[j].tile.parentNode.removeChild(tiles[j].tile);
                 tiles.splice(j, 1);
