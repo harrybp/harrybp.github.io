@@ -1,7 +1,7 @@
 /*
   * Game by Harry BP
   */
-  map = [
+  map = [//Default map
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -15,11 +15,11 @@
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
-[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1],
+[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
+[1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1],
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -37,6 +37,9 @@
 ];
 
     //Game properties
+    var wWidth = window.innerWidth;
+    var wHeight = window.innerHeight;
+    //console.log(w + ":" + h);
     
     var gameSize, jumpSpeed, creatureJumpSpeed, gridDimension, playerPosX, playerPosY, playerSpeed, creatureSpeed, startX, startY, arrowSpeed, arrowHeight, playerWidth, playerHeight, gravity;
     var xDeleteDist = 2;
@@ -46,7 +49,10 @@
     var damageTimeout = 25;
     var gridSize = 16;
     var logging = false;
+    var creatureHealth = 4;
+    var creatureAbudance = 3; //One in x
     var prevSize;
+
     calculateSize(384);
     function calculateSize(x){
       gameSize = parseInt(x);
@@ -62,6 +68,8 @@
       creatureSpeed = gameSize/128;
       startX = gameSize/4;
       startY = gameSize/2;
+      //startX = 4500;
+      //startY = 200;
       arrowSpeed = gravity*4;
       arrowHeight = gameSize/64;
       prevSize = x;
@@ -94,6 +102,8 @@
     var tileCount, paused ,gravSpeed, jumpCount, xSpeed, xPosition , xPositionOffset, yPosition, yPositionOffset, col, rowNo, tileLefts, tileTops, moved, crouched, faceDirection, arrowCount, creatureCount, activeCreatureCount, creatures, tiles, hearts, health, dead, damageTime, score, bottomBorder, player, container;
     var pause = [];
     var headTile;
+    var maxCol;
+    var scoreTile;
 
     function tileObj(tile, left, top, height, isArrow, direction, isCreature, id){
       this.tile = tile;
@@ -148,6 +158,7 @@
       dead = false;
       score = 0;
       damageTime = 0;
+      maxCol = 0;
 
       //Size and place all elements
       document.body.style.overflowX = "hidden";
@@ -162,6 +173,8 @@
       cont.style.color = "white";
       cont.style.textAlign = "center";
       cont.style.cssText += "position: relative; z-index: -1; margin: auto;";
+      var gCTop = cont.style.top;
+      console.log(gCTop);
 
       //Player
       player = document.createElement("div");
@@ -173,21 +186,16 @@
       headTile = head;
       cont.appendChild(player);
       
-    
-
-    
-
-
       //Borders
       var borderCSS = "position: absolute; background-color:" + bgColor + "; z-index: 3; color: white;";
-      var sideCSS = "height: " + (gameSize*2 + 122) + "px; width: " + 1000 + "px; top: " + (-(gameSize/2)) + "px;";
+      var sideCSS = "height: " + (gameSize + 500) + "px; width: " + (wWidth-gameSize)/2 + "px; top: " + (-250) + "px;";
       var topBottomCSS = "height: " + 250 + "px; width: " + gameSize + "px; left: " + 0 + "px; font-size: 200%;";
       var rBorder = document.createElement("div");
       var lBorder = document.createElement("div");
       var bBorder = document.createElement("div");
       var tBorder = document.createElement("div");
       rBorder.style.cssText += borderCSS + sideCSS + "left: " + gameSize + "px;";
-      lBorder.style.cssText += borderCSS + sideCSS + "left: " + (-1000) + "px;";
+      lBorder.style.cssText += borderCSS + sideCSS + "left: " + (-(wWidth-gameSize)/2) + "px;";
       bBorder.style.cssText += borderCSS + topBottomCSS + "top: " + gameSize + "px;";
       tBorder.style.cssText += borderCSS + topBottomCSS + "top: " + (-250) + "px;";
       cont.appendChild(rBorder);
@@ -196,10 +204,12 @@
       cont.appendChild(tBorder);
       bottomBorder = bBorder;
       borders = [lBorder, rBorder, tBorder, bBorder];
+
       //Outline
       var outline = document.createElement("div");
       outline.style.cssText += "position: absolute; background-color: transparent; border: 3px solid white; z-index: 99; width: " + (gameSize-4) + "px; height: " + (gameSize-4) + "px;";
       cont.appendChild(outline);
+
       //Health indicators
       for(i = 0; i < 5; i++){
         var heart = document.createElement("div");
@@ -207,6 +217,13 @@
         cont.appendChild(heart);
         hearts[i] = heart;
       }
+
+      //Score tile
+      var scoreDiv = document.createElement("div");
+      scoreDiv.style.cssText +="font-family: 'Arial Black';position: absolute; z-index: 3; background-color: #7f97d1; top: " + gridDimension + "px; left: " + gridDimension +"px; width: " + gridDimension*3 + "px; height: " + gridDimension + "px;";
+      container.appendChild(scoreDiv);
+      scoreTile = scoreDiv;
+
       bottomBorder.innerHTML = "&larr; Move &rarr;<br>&uarr; Jump / Double-Jump &uarr;<br>&darr; Duck &darr;<br>S Shoot | Pause P";
       //Initalise Position
       xPosition = startX;
@@ -215,13 +232,70 @@
       yPositionOffset = yPosition % gridDimension;
       col = Math.floor(xPosition/gridDimension);
       rowNo = Math.floor(yPosition/gridDimension);
-
+      genMap();
       //Load initial tiles
       renderCreatures(); 
       for(x = -1; x < gridSize + 1; x++){
         loadCol(x+col,x*gridDimension);
       }
       paused = false;
+    }
+
+    
+    function genMap(){
+      var length = 1000;
+      var height = 30;
+      var leeway = 7;
+      var minRadius = 3;
+
+      //Initialise arrays
+      map = [];
+      for(i = 0; i < height; i++){
+        map.push([])
+      }
+      for(i = 0; i < height; i++){
+        for(j = 0; j < length; j++){
+          map[i][j] = 1;
+        }
+      }
+
+      //Generate
+      var circleYCenter = 16;
+      for(circleXCenter = 10; circleXCenter < length; circleXCenter+= 2){
+        //console.log(circleXCenter);
+        if(circleYCenter < minRadius + leeway){
+          change = 3;
+        } else if(circleYCenter > (height-minRadius-leeway)){
+          change = -3;
+        } else {
+          var change = 2 - Math.floor(Math.random() * (3 - 1 + 1) + 1);
+        }
+        
+        //console.log(change);
+        circleYCenter += change;
+        if(circleYCenter < minRadius + leeway){
+          circleYCenter = minRadius + leeway;
+        } else if(circleYCenter > (height-minRadius-leeway)){
+          circleYCenter = (height-minRadius-leeway);
+        }
+        var cTop = circleYCenter - leeway;
+        var cBottom = height - leeway - circleYCenter;
+        var maxRadius = Math.min(cTop, cBottom);
+        var isCreature = Math.floor(Math.random() * (creatureAbudance - 1 + 1) + 1);
+        var radius = Math.floor(Math.random() * (maxRadius - minRadius + 1) + minRadius);
+        for(i = 0; i < height; i++){
+          for(j = 0; j < length; j++){
+            var  x = Math.sqrt(Math.pow(Math.abs(circleYCenter-i),2) + Math.pow(Math.abs(circleXCenter-j),2));
+            if(x< radius){
+              map[i][j] = 0;
+            }
+          }
+        }
+        if(isCreature == 1 && circleXCenter > 15){
+          map[circleYCenter+radius][circleXCenter] = creatureCount + 5;
+          creatureCount++;
+        }
+      }
     }
 
     function loseHealth(amount){
@@ -251,7 +325,7 @@
       while (container.hasChildNodes()) {
         container.removeChild(container.lastChild);
       }
-      container.textContent = "Game Over! Press 'p' to play again";
+      container.textContent = "Game Over! Score: " + score + ". Press 'p' to play again";
     }
 
     //Calls update Frame repeatedly
@@ -287,8 +361,13 @@
       //if(xSpeed != 0){
         panMap();
       //}
-      
+      if(col > maxCol){
+        maxCol = col;
+        score++;
+        scoreTile.textContent = score;
+      }
       //Print stats
+
       if(logging){
         bottomBorder.textContent = tileCount + " tiles loaded | x: " + xPosition + ", col: " + col + " | y: " + yPosition + ", row: " + rowNo + " | Direction: " + faceDirection + " | " + arrowCount + " arrows | " + creatureCount + " creatures (" + activeCreatureCount + " active)" ;
       }
@@ -297,6 +376,9 @@
 
     //For x axis movement
     function panMap(){
+        
+
+
         var moveAmount = null;
         //Check each tile
         for(i = 0; i < tileCount; i++){
@@ -332,6 +414,7 @@
             creatures[tiles[i].id].frozen = false;
             activeCreatureCount++;
           }
+        
         }
       }
       
@@ -341,7 +424,7 @@
       if(tileCount > 20 && moved){
         deleteTiles();
       }
-
+     
       //Render new rows and columns about to come into view
       xPosition-= moveAmount;
       xPositionOffset -= moveAmount;
@@ -363,10 +446,7 @@
         yPositionOffset+=gridDimension;
         loadRow(rowNo-test, -gridDimension-(yPositionOffset%gridDimension));
       }
-      //Unfreeze creatures
-
-
-
+      
     }
 
     //For y axis movement
@@ -419,8 +499,11 @@
         if(moved){
           for(i = 0; i < tileCount; i++){
             tiles[i].top += moveAmount;
-            tiles[i].tile.style.cssText +=";top: " + tiles[i].top + "px; left: " + tiles[i].left + "px;";
-            moved = false;
+            if(!(tiles[i].isCreature && creatures[tiles[i].id].frozen) && tiles[i].left + gridDimension > -gridDimension && tiles[i].left < gameSize + gridDimension && tiles[i].top + gridDimension > -gridDimension && tiles[i].top < gameSize + gridDimension){
+              tiles[i].tile.style.cssText +=";top: " + tiles[i].top + "px; left: " + tiles[i].left + "px;";
+              moved = false;
+            }
+            
           }
         }
         yPosition-=moveAmount;
@@ -531,6 +614,7 @@
       }  
       tile.style.cssText += "z-index: 2; position: absolute; background-color:" + bgColor + "; width: " + width + "px; height: " + height + "px; left: " + xOffset + "px; top: " + yOffset + "px;";    
       container.appendChild(tile);
+
       if(dontAdd){
         return tile;
       } else {
@@ -574,7 +658,7 @@
           if(map[j][i] >= 5){
             var xOffset = ((i*gridDimension)-xPosition);
             var yOffset = (((j-1)*gridDimension)-yPosition);
-            var newCreature = createTile(gridDimension, gridDimension, (i*gridDimension)-xPosition, ((j-1)*gridDimension)-yPosition, "", true);
+            var newCreature = createTile(gridDimension, gridDimension, gameSize, 0, "", true);
             newCreature.style.cssText += "border-color:rgb(55,142,61); border-style: solid; box-sizing: border-box; background-color: #7fba6f; border-width: 0px "+gridDimension/3 + "px "+gridDimension/3 +"px "+gridDimension/3 +"px;";
             var head = document.createElement("div");
             head.style.cssText += ";position: absolute; z-index: 4; width: " + playerWidth + "px; height: " + playerWidth + "px; background-color: #73ba60; left: " + -(playerWidth/3) + "px; border-bottom: 2px solid green";//change this
@@ -586,7 +670,7 @@
             newCreature.style.height = (2*gridDimension) +"px";
             tiles[tileCount] = new tileObj(newCreature, xOffset, yOffset, 2*gridDimension, false, 0, true, map[j][i]);
             tileCount++;
-            creatures[map[j][i]]= new creature(newCreature, head, eye, 0, 5, true, -1);
+            creatures[map[j][i]]= new creature(newCreature, head, eye, 0, creatureHealth, true, -1);
             creatureCount++;
           }
         }
@@ -615,7 +699,7 @@
         var creature = tiles[i];
         var newLeft = tiles[i].left + move;
         for(j = 0; j < tileCount; j++){
-          if(tiles[j].isCreature || tiles[j].isArrow){
+          if(tiles[j].isArrow || i == j || (tiles[j].isCreature && creatures[tiles[j].id].frozen)){
             continue;
           }
           var block = tiles[j];
@@ -634,13 +718,27 @@
             }
           }
         }
+        if(newLeft < playerPosX + playerWidth && newLeft + gridDimension > playerPosX && creature.top + (2*gridDimension) > playerPosY && creature.top < playerPosY + playerHeight){
+          if(move > 0){
+            var newLeftT = playerPosX - gridDimension;
+            if(newLeftT < newLeft){
+              newLeft = newLeftT;
+            }
+          }else {
+            var newLeftT = playerPosX + playerWidth;
+            if(newLeftT > newLeft){
+              newLeft = newLeftT;
+            }
+          }
+          loseHealth(2);
+        }
         creature.left = newLeft;
 
         creatures[creature.id].cGravSpeed += gravity;
         var newTop = creature.top + creatures[creature.id].cGravSpeed;
 
         for(j = 0; j < tileCount; j++){
-          if(tiles[j].isCreature || tiles[j].isArrow){
+          if(tiles[j].isArrow || tiles[j].isCreature){//|| i==j ||(tiles[j].isCreature && creatures[tiles[j].id].frozen)){
             continue;
           }
           var block = tiles[j];
@@ -659,9 +757,9 @@
                 newTop = newTopT;
               }
             }
-          }
-          
+          } 
         }
+
         if(newTop != creature.top + creatures[creature.id].cGravSpeed){
           creatures[creature.id].cGravSpeed = 0;
         }
@@ -670,8 +768,6 @@
         }
         creature.top = newTop;
         creature.tile.style.cssText += "left: " + newLeft + "px; top: " + newTop + "px;";
-        if(creatures[creature.id].health > 0 && creature.left + gridDimension > playerPosX && creature.left < playerPosX + playerWidth && creature.top + (2*gridDimension) > playerPosY && creature.top < playerPosY + playerHeight)
-          loseHealth(2);
       }
     }
     
@@ -727,7 +823,7 @@
         for(j = 0; j < tileCount; j++){
           if(tiles[j].top < tiles[i].top + arrowHeight && tiles[j].top+tiles[j].height > tiles[i].top && tiles[j].left < tiles[i].left && tiles[j].left + gridDimension > tiles[i].left){
             clash = true;
-            if(tiles[j].isCreature && creatures[tiles[j].id].health > 0){
+            if(tiles[j].isCreature && !creatures[tiles[j].id].frozen &&creatures[tiles[j].id].health > 0){
               creatures[tiles[j].id].health -= 1;
               var val = (255 - (40*creatures[tiles[j].id].health));
               creatures[tiles[j].id].tile.style.borderColor = "rgb(" + (255 - (40*creatures[tiles[j].id].health)) + ",142,61)";
@@ -739,6 +835,8 @@
                 i--;
                 activeCreatureCount--;
                 creatureCount--;
+                score += 25;
+                scoreTile.textContent = score;
                 break;
               }
             }
