@@ -2,25 +2,179 @@
 * Game by Harry BP
 */
 map = [];
+function draw(){
+  if(paused)
+    return;
+  //Clear canvas
+  ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+  //Draw player
+  if(faceDirection == -1){
+    ctx.strokeStyle = "#725f35";
+    ctx.lineWidth=gridDimension/8;
+    ctx.beginPath();
+    ctx.moveTo(playerPosX + playerWidth/4, playerPosY + playerWidth - playerWidth/4);
+    ctx.bezierCurveTo(playerPosX - playerWidth/2,playerPosY + playerWidth - playerWidth/4,playerPosX - playerWidth/2,playerPosY + playerWidth + playerWidth/2 + playerWidth/2,playerPosX + playerWidth/4, playerPosY + playerWidth + playerWidth/2 + playerWidth/2);
+    ctx.stroke();
+  }
+  //Body
+  ctx.fillStyle = "#849dbc";
+  ctx.fillRect(playerPosX, playerPosY, playerWidth, playerHeight);
+  //Head
+  ctx.fillStyle = "#f9e1c2";
+  ctx.fillRect(playerPosX, playerPosY, playerWidth, playerWidth);
+  //Arm
+  ctx.fillStyle = "#6067a5";
+  ctx.fillRect(playerPosX + (gridDimension/3), playerPosY + gridDimension, gridDimension/3, gridDimension);
+  //Hair
+  ctx.fillStyle = "#9ea05e";
+  ctx.beginPath();
+  ctx.moveTo(playerPosX, playerPosY);
+  ctx.lineTo(playerPosX + playerWidth, playerPosY);
+  if(faceDirection == 1){
+    ctx.lineTo(playerPosX + playerWidth, playerPosY + playerWidth/4);
+    ctx.lineTo(playerPosX + playerWidth/2, playerPosY + playerWidth/4);
+    ctx.lineTo(playerPosX, playerPosY + (3*playerWidth)/4);
+  } else {
+    ctx.lineTo(playerPosX + playerWidth, playerPosY + (3*playerWidth)/4);
+    ctx.lineTo(playerPosX + playerWidth/2, playerPosY + playerWidth/4);
+    ctx.lineTo(playerPosX, playerPosY + playerWidth/4);
+  }
+  ctx.closePath();
+  ctx.fill();
+ 
+  //playerPosY + playerWidth + playerWidth/4
+  if(faceDirection == 1){
+    ctx.strokeStyle = "#87703f";
+    ctx.lineWidth=gridDimension/8;
+    ctx.beginPath();
+    ctx.moveTo(playerPosX + 3*playerWidth/4, playerPosY + playerWidth - playerWidth/4);
+    ctx.bezierCurveTo(playerPosX + playerWidth*1.5,playerPosY + playerWidth - playerWidth/4,playerPosX + playerWidth*1.5,playerPosY + playerWidth + playerWidth/2 + playerWidth/2,playerPosX + 3*playerWidth/4, playerPosY + playerWidth + playerWidth/2 + playerWidth/2);
+    ctx.stroke();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = gridDimension/16;
+    ctx.beginPath();
+    ctx.moveTo(playerPosX + 3*playerWidth/4, playerPosY + playerWidth - playerWidth/4);
+    ctx.lineTo(playerPosX + playerWidth/2, playerPosY + playerWidth + playerWidth/2);
+    ctx.lineTo(playerPosX + 3*playerWidth/4, playerPosY + playerWidth + playerWidth/2 + playerWidth/2);
+    ctx.stroke();
+  } 
+  
+
+  for(x = 0; x < tileCount; x++){
+    if(tiles[x].left + gridDimension < 0 || tiles[x].left > gameSize || tiles[x].top + gridDimension < 0 || tiles[x].top > gameSize)
+      continue;
+
+    //Draw creatures
+    if(tiles[x].isCreature){
+      var z = gridDimension/8;
+      var y = gridDimension/12;
+      if(creatures[tiles[x].id].direction == 1){
+        z = gridDimension - gridDimension/8 - gridDimension/3;
+        y = gridDimension/3  - gridDimension/8 - gridDimension/12;
+      }
+      //Body
+      ctx.fillStyle = "rgb(" + (255 - (30*creatures[tiles[x].id].health)) + ",142,61)";
+      ctx.fillRect(tiles[x].left, tiles[x].top, gridDimension, tiles[x].height);
+      //Head
+      ctx.fillStyle = "#73ba60";
+      ctx.fillRect(tiles[x].left, tiles[x].top, gridDimension, gridDimension);
+      //Arm
+      ctx.fillStyle =  "#7fba6f";
+      ctx.fillRect(tiles[x].left + (gridDimension/3), tiles[x].top + gridDimension, gridDimension/3, 2*gridDimension/3);
+      //Eye
+      ctx.fillStyle = "white";
+      ctx.fillRect(tiles[x].left + z, tiles[x].top + gridDimension/3, gridDimension/3, gridDimension/3);
+      //Eyeball
+      ctx.fillStyle = "black";
+      ctx.fillRect(tiles[x].left + z + y, tiles[x].top + gridDimension/3 + gridDimension/12, gridDimension/8, gridDimension/8);
+
+    //Draw arrows
+    } else if(tiles[x].isArrow){
+      ctx.fillStyle = "#9b7d58";
+      if(faceDirection == 1){
+        ctx.fillRect(tiles[x].left,tiles[x].top,gridDimension - ((2*gridDimension)/8),tiles[x].height);
+        ctx.fillStyle = "gray";
+        ctx.beginPath();
+        ctx.moveTo(tiles[x].left + gridDimension, tiles[x].top + (tiles[x].height/2));
+        ctx.lineTo(tiles[x].left + ((6/8)*gridDimension), (tiles[x].top - (gridDimension/8)));
+        ctx.lineTo(tiles[x].left + ((6/8)*gridDimension), tiles[x].top + tiles[x].height+ (gridDimension/8));
+      } else {
+        ctx.fillRect(tiles[x].left + ((2*gridDimension)/8), tiles[x].top,gridDimension - ((2*gridDimension)/8),tiles[x].height);
+        ctx.fillStyle = "gray";
+        ctx.beginPath();
+        ctx.moveTo(tiles[x].left, tiles[x].top + (tiles[x].height/2));
+        ctx.lineTo(tiles[x].left + ((2/8)*gridDimension), (tiles[x].top - (gridDimension/8)));
+        ctx.lineTo(tiles[x].left + ((2/8)*gridDimension), tiles[x].top + tiles[x].height+ (gridDimension/8));
+      }
+      ctx.closePath();
+      ctx.fill();
+    }else {
+
+      //Draw tiles
+      ctx.fillStyle = tiles[x].color;
+      if(tiles[x].left + gridDimension > gameSize){
+        var width = gameSize - tiles[x].left;
+      } else {
+        var width = gridDimension;
+      }
+      if(tiles[x].top + gridDimension > gameSize){
+        var height = gameSize - tiles[x].top;
+      } else {
+        var height = tiles[x].height;
+      }
+      ctx.fillRect(tiles[x].left,tiles[x].top,width,height);
+    }
+  }
+
+  //Draw health
+  ctx.fillStyle = "red";
+  var hp= health;
+  var pos = gridDimension;
+  while(hp > 0){
+    if(hp > 20){
+      ctx.fillRect(pos, gameSize - (2*gridDimension), gridDimension, gridDimension);
+    } else {
+      ctx.fillRect(pos, gameSize - (2*gridDimension), ((hp/20)*gridDimension), gridDimension);
+    }
+    pos += 2*gridDimension;
+    hp -= 20;
+  }  
+  
+  //Write score
+  ctx.font= ((10/128)*gameSize) +"px Arial Black";
+  ctx.fillStyle = "white";
+  ctx.fillText(score, gridDimension, 2*gridDimension, 2*gridDimension);
+}
 
 //--------------------------------------------------------------------------
 //Global Game properties
+
+//Sizing
 var wWidth = window.innerWidth;
 var wHeight = window.innerHeight;
-var gameSize, jumpSpeed, creatureJumpSpeed, gridDimension, playerPosX, playerPosY, playerSpeed, creatureSpeed, startX, startY, arrowSpeed, arrowHeight, playerWidth, playerHeight, gravity;
+var gridSize = 16;
+var gameSize, gridDimension;
+
+//Player
+var jumpSpeed, playerPosX, playerPosY, playerSpeed, startX, startY, playerWidth, playerHeight;
+
+//Other
 var xDeleteDist = 2;
-var yDeleteDist = 5;
+var yDeleteDist = 6;
 var renderDist = 5;
 var frameLength = 30;
 var damageTimeout = 25;
-var gridSize = 16;
-var logging = false;
+var arrowSpeed, arrowHeight, gravity, ctx, canvas;
+
+//Creatures
+var creatureJumpSpeed, creatureSpeed;
 var creatureHealth = 4;
 var creatureAbudance = 3; //One in x
 
 //--------------------------------------------------------------------------
 //Calculate all element sizes from game size
-calculateSize(384);
+//128/256/384/512/
 function calculateSize(x){
   gameSize = parseInt(x);
   playerWidth = gameSize/16;
@@ -35,47 +189,26 @@ function calculateSize(x){
   creatureSpeed = gameSize/128;
   startX = gameSize/4;
   startY = gameSize/2;
-  //startX = 4500;
-  //startY = 200;
   arrowSpeed = gravity*4;
   arrowHeight = gameSize/64;
 }
 
 //--------------------------------------------------------------------------
-//Resize game based on input
-function getResize(){
-  var val = document.getElementById("resize").value;
-  gameSize = val;
-  die();
-  calculateSize(val);
-  init();
-}
-
-//--------------------------------------------------------------------------
-//Toggles borders and dev information
-function toggleDevMode(){
-  logging = !logging;
-    for(i = 0; i < 4; i++){
-      if(logging){
-      borders[i].style.backgroundColor = "transparent";
-    } else {
-      var bodyStyle = window.getComputedStyle(document.body, null);
-      var bgColor = bodyStyle.backgroundColor;
-      borders[i].style.backgroundColor = bgColor;
-      bottomBorder.textContent = "";
-    }
-  }
-}
-
-//--------------------------------------------------------------------------
 //Game state
-var headTile, maxCol, scoreTile, borders, tileCount, paused ,gravSpeed, jumpCount, xSpeed, xPosition , xPositionOffset, yPosition, yPositionOffset, col, rowNo, tileLefts, tileTops, moved, crouched, faceDirection, arrowCount, creatureCount, activeCreatureCount, creatures, tiles, hearts, health, dead, damageTime, score, bottomBorder, player, container;
-var pause = [];
+//Arrays
+var creatures, tiles;
+//Counts
+var tileCount, arrowCount, creatureCount, activeCreatureCount;
+//Player state
+var xSpeed, crouched, faceDirection, health, dead, maxCol, score, damageTime, jumpCount, gravSpeed, paused;
+//Position
+var xPosition , xPositionOffset, yPosition, yPositionOffset, col, rowNo;
+//Stats
+var maxLen;
 
 //--------------------------------------------------------------------------
 //Object constructors
-function tileObj(tile, left, top, height, isArrow, direction, isCreature, id){
-  this.tile = tile;
+function tileObj(left, top, height, isArrow, direction, isCreature, id, color){
   this.left = left;
   this.top = top;
   this.height = height;
@@ -83,130 +216,107 @@ function tileObj(tile, left, top, height, isArrow, direction, isCreature, id){
   this.direction = direction;
   this.isCreature = isCreature;
   this.id = id;
+  this.color = color;
 }
 
-function creature(tile, head, eye, cGravSpeed, health, frozen, direction){
-  this.tile = tile;
+function creature(cGravSpeed, health, frozen, direction){
   this.cGravSpeed = cGravSpeed;
   this.health = health;
   this.frozen = frozen;
-  this.head = head;
-  this.eye = eye;
   this.direction = direction;
 }
 
 //--------------------------------------------------------------------------
 //On load
 window.onload = function(){
-	init();
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var c = url.searchParams.get("size");
+  if(c == null){
+    c = 3;
+  }
+  init(parseInt(c*128));
+}
+
+//--------------------------------------------------------------------------
+//Calls update Frame repeatedly
+var start = null;
+window.requestAnimationFrame(step);
+function step(timestamp){
+  if(!start) start = timestamp;
+  var progress = timestamp - start;
+  if(progress > frameLength){
+    start = timestamp;
+    if(!paused){
+      updateFrame();
+    }
+  }
+  window.requestAnimationFrame(step);
+}
+
+//--------------------------------------------------------------------------
+//Called at regular intervals to update positions of everything on screen
+function updateFrame(){
+  var start = performance.now();
+  //Move objects
+  if(arrowCount > 0){
+    moveArrows();
+  }
+  if(activeCreatureCount > 0){
+    moveCreatures();
+  }
+  yAccelerate();
+  panMap();
+  loadTiles();
+  if(col > maxCol){
+    maxCol = col;
+    score++;
+  }
+  draw();
+  //Stats
+  var end = (performance.now() - start);
+  if(end > maxLen){
+    maxLen = end;
+  }
+  document.getElementById("info").textContent = end.toFixed(2) + " : " + maxLen.toFixed(2);
 }
 
 //--------------------------------------------------------------------------
 //Initialise game state, create all elements
-function init(){
-  //Reset gamestate
-  tileCount = 0;
+function init(size){
   paused = true;
-  gravSpeed = 0;
-  jumpCount = 0;  
-  xSpeed = 0;
-  xPosition = 0;
-  xPositionOffset = 0;
-  yPosition = 0;
-  yPositionOffset = 0;
-  col = 0;
-  rowNo =0;
-  tileLefts = Array(10);
-  tileTops = Array(10);
-  moved = false;
+  calculateSize(size);
+  // Create the canvas
+  if(canvas != null){
+    canvas.parentNode.removeChild(canvas);
+  }
+  canvas = document.createElement("canvas");
+  
+  ctx = canvas.getContext("2d");
+  canvas.width = gameSize;
+  canvas.height = gameSize;
+  canvas.style.cssText += "display:block; border: 2px solid white; margin: auto; width: " + gameSize + "px; height: " + gameSize + "px;";
+  document.body.insertBefore(canvas, document.body.firstChild);
+
+  //Reset variables
+  gravSpeed = score = damageTime = maxCol = jumpCount = xSpeed = xPosition = xPositionOffset = yPosition = yPositionOffset = col = maxLen = rowNo = arrowCount = creatureCount = activeCreatureCount =tileCount = 0;
   crouched = false;
   faceDirection = 1;
-  arrowCount = 0;
-  creatureCount = 0;
-  activeCreatureCount = 0;
   creatures = [];
   tiles = [];
-  hearts = [5];
   health = 100;
   dead = false;
-  score = 0;
-  damageTime = 0;
-  maxCol = 0;
 
-  //Size and place all elements
-  document.body.style.overflowX = "hidden";
-  var bodyStyle = window.getComputedStyle(document.body, null);
-  var bgColor = bodyStyle.backgroundColor;
-  var cont = document.getElementById("gameContainer");
-  container = cont;
-  cont.textContent = "";
-  cont.style.height = gameSize + "px";
-  cont.style.width = gameSize + "px";
-  cont.style.marginBottom = gameSize/2 + "px";
-  cont.style.color = "white";
-  cont.style.textAlign = "center";
-  cont.style.cssText += "position: relative; z-index: -1; margin: auto;";
-  var gCTop = cont.style.top;
-  console.log(gCTop);
-
-  //Player
-  player = document.createElement("div");
-  player.style.cssText += "position: absolute; background-color: #3f5996; height: " + playerHeight + "px; width: " + playerWidth + "px; left: " + playerPosX + "px; top: " + playerPosY + "px; border-width: "+ (playerWidth/0.9) + "px " + (playerWidth/3) + "px "+ (playerWidth/1.5) + "px " + (playerWidth/3) + "px; box-sizing: border-box; border-color:#7f97d1; border-style: solid;";
-  var head = document.createElement("div");
-  var x = playerWidth/2.4;
-  head.style.cssText += "position: absolute; left:"+(-(playerWidth/3))+"px; top:"+ -(playerWidth/0.9)+ "px;border-width: "+ x + "px 0px "+ x + "px "+ x +"px; width: "+playerWidth +"px; height: "+ playerWidth + "px; border-style: solid; border-color: #9e8b00 #9e8b00 #ffe9d3 #9e8b00; box-sizing: border-box; background-color: #ffe9d3;"
-  player.appendChild(head);
-  headTile = head;
-  cont.appendChild(player);
-  
-  //Borders
-  var borderCSS = "position: absolute; background-color:" + bgColor + "; z-index: 3; color: white;";
-  var sideCSS = "height: " + (gameSize + 500) + "px; width: " + (wWidth-gameSize)/2 + "px; top: " + (-250) + "px;";
-  var topBottomCSS = "height: " + 250 + "px; width: " + gameSize + "px; left: " + 0 + "px; font-size: 200%;";
-  var rBorder = document.createElement("div");
-  var lBorder = document.createElement("div");
-  var bBorder = document.createElement("div");
-  var tBorder = document.createElement("div");
-  rBorder.style.cssText += borderCSS + sideCSS + "left: " + gameSize + "px;";
-  lBorder.style.cssText += borderCSS + sideCSS + "left: " + (-(wWidth-gameSize)/2) + "px;";
-  bBorder.style.cssText += borderCSS + topBottomCSS + "top: " + gameSize + "px;";
-  tBorder.style.cssText += borderCSS + topBottomCSS + "top: " + (-250) + "px;";
-  cont.appendChild(rBorder);
-  cont.appendChild(lBorder);
-  cont.appendChild(bBorder);
-  cont.appendChild(tBorder);
-  bottomBorder = bBorder;
-  borders = [lBorder, rBorder, tBorder, bBorder];
-
-  //Outline
-  var outline = document.createElement("div");
-  outline.style.cssText += "position: absolute; background-color: transparent; border: 3px solid white; z-index: 99; width: " + (gameSize-4) + "px; height: " + (gameSize-4) + "px;";
-  cont.appendChild(outline);
-
-  //Health indicators
-  for(i = 0; i < 5; i++){
-    var heart = document.createElement("div");
-    heart.style.cssText += "position: absolute; z-index: 3; background-color: red; width: " + gridDimension + "px; height: " + gridDimension + "px; left: " + ((i*2*gridDimension) + gridDimension) + "px; top: " + (gameSize - (2*gridDimension)) + "px; ";
-    cont.appendChild(heart);
-    hearts[i] = heart;
-  }
-
-  //Score tile
-  var scoreDiv = document.createElement("div");
-  scoreDiv.style.cssText +="font-family: 'Arial Black';position: absolute; z-index: 3; background-color: #7f97d1; top: " + gridDimension + "px; left: " + gridDimension +"px; width: " + gridDimension*3 + "px; height: " + gridDimension + "px;";
-  container.appendChild(scoreDiv);
-  scoreTile = scoreDiv;
-
-  bottomBorder.innerHTML = "&larr; Move &rarr;<br>&uarr; Jump / Double-Jump &uarr;<br>&darr; Duck &darr;<br>S Shoot | Pause P";
-  //Initalise Position
+  //Place player
   xPosition = startX;
   yPosition = startY;
   xPositionOffset = xPosition % gridDimension;
   yPositionOffset = yPosition % gridDimension;
   col = Math.floor(xPosition/gridDimension);
   rowNo = Math.floor(yPosition/gridDimension);
+
+  //Generate map and load tiles
   genMap();
-  //Load initial tiles
   renderCreatures(); 
   for(x = -1; x < gridSize + 1; x++){
     loadCol(x+col,x*gridDimension);
@@ -234,6 +344,7 @@ function genMap(){
   }
 
   //Generate
+  var creatureSpawns = 0;
   var circleYCenter = 16;
   for(circleXCenter = 10; circleXCenter < length; circleXCenter+= 2){
     //console.log(circleXCenter);
@@ -266,8 +377,8 @@ function genMap(){
       }
     }
     if(isCreature == 1 && circleXCenter > 25){
-      map[circleYCenter+radius][circleXCenter] = creatureCount + 5;
-      creatureCount++;
+      map[circleYCenter+radius][circleXCenter] = creatureSpawns + 5;
+      creatureSpawns++;
     }
   }
 }
@@ -282,17 +393,8 @@ function loseHealth(amount){
   damageTime = time;
   health -= amount;
   if(health < 1){
-    paused = true;
     die();
-  } else {
-    var heart = Math.floor(health/20);
-    for(i = 4; i > heart; i--){
-      hearts[i].style.visibility = "hidden";
-    }
-    var percent = health % 20;
-    hearts[heart].style.width = ((percent/20)*gridDimension) + "px";
-  }
-  
+  } 
 }
 
 //--------------------------------------------------------------------------
@@ -300,113 +402,20 @@ function loseHealth(amount){
 function die(){
   dead = true;
   paused = true;
-  while (container.hasChildNodes()) {
-    container.removeChild(container.lastChild);
-  }
-  container.textContent = "Game Over! Score: " + score + ". Press 'p' to play again";
+  ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  //Write score
+  ctx.font= ((10/32)*gameSize) +"px Arial Black";
+  console.log((10/32)*gameSize);
+  ctx.fillStyle = "white";
+  ctx.fillText("Game over", gridDimension*2, 5*gridDimension, 12*gridDimension);
+  ctx.fillText("Score: " + score, gridDimension*2, 12*gridDimension, 12*gridDimension);
 }
 
 //--------------------------------------------------------------------------
-//Calls update Frame repeatedly
-var start = null;
-window.requestAnimationFrame(step);
-function step(timestamp){
-  if(!start) start = timestamp;
-  var progress = timestamp - start;
-  if(progress > frameLength){
-    start = timestamp;
-    if(!paused){
-      updateFrame();
-    }
-  }
-  window.requestAnimationFrame(step);
-}
-
-//--------------------------------------------------------------------------
-//Called at regular intervals to update positions of everything on screen
-function updateFrame(){
-  //Move objects
-  
-  if(arrowCount > 0){
-    moveArrows();
-  }
-  if(activeCreatureCount > 0){
-    moveCreatures();
-    yDeleteDist = 5;
-  } else {
-    yDeleteDist = 2;
-  }
-  yAccelerate();
+//Calculate which tiles need to be loaded into array
+function loadTiles(){
   col = Math.floor(xPosition/gridDimension);
   rowNo = Math.floor(yPosition/gridDimension);
-  //if(xSpeed != 0){
-    panMap();
-  //}
-  if(col > maxCol){
-    maxCol = col;
-    score++;
-    scoreTile.textContent = score;
-  }
-  //Print stats
-
-  if(logging){
-    bottomBorder.textContent = tileCount + " tiles loaded | x: " + xPosition + ", col: " + col + " | y: " + yPosition + ", row: " + rowNo + " | Direction: " + faceDirection + " | " + arrowCount + " arrows | " + creatureCount + " creatures (" + activeCreatureCount + " active)" ;
-  }
-}
-
-//--------------------------------------------------------------------------
-//Calculates left positioning of all elements based on player x axis movement
-//Also renders new columns and rows 
-function panMap(){
-    var moveAmount = null;
-    //Check each tile
-    for(i = 0; i < tileCount; i++){
-      var pLeftOriginal = tiles[i].left;
-      var pTop = tiles[i].top;
-      var newPLeft = pLeftOriginal + xSpeed;
-      var arrow = false;
-      if(tiles[i].isArrow){
-        var tileHeight = arrowHeight;
-      } else {
-        var tileHeight = gridDimension;
-      }
-
-      //Check for clash with player
-      if(!tiles[i].isCreature && !tiles[i].isArrow && newPLeft < playerPosX + playerWidth && newPLeft + gridDimension > playerPosX && playerPosY + playerHeight > pTop && playerPosY < pTop + tileHeight){
-        if(xSpeed < 0){
-          newPLeft = playerPosX + playerWidth;
-        } else {
-          newPLeft = playerPosX - gridDimension;
-        }
-      } 
-      //Get minimum move amount
-      if(moveAmount == null || (xSpeed < 0 && newPLeft - pLeftOriginal > moveAmount) || (xSpeed > 0 && newPLeft - pLeftOriginal < moveAmount)){
-        moveAmount = newPLeft - pLeftOriginal;
-      }
-    }
-  if(moveAmount != 0){//Move tiles
-    moved = true;
-    for(i = 0; i < tileCount; i++){
-      tiles[i].left += moveAmount;
-      //tiles[i].tile.style.left = tiles[i].left + "px";
-      if(tiles[i].isCreature && creatures[tiles[i].id].frozen && tiles[i].left > 0 && tiles[i].left < gameSize){
-        creatures[tiles[i].id].frozen = false;
-        activeCreatureCount++;
-      }
-    
-    }
-  }
-  
-  if(tileCount < 1){//If not tiles then no clash possible
-    moveAmount = xSpeed;
-  }
-  if(tileCount > 20 && moved){
-    deleteTiles();
-  }
- 
-  //Render new rows and columns about to come into view
-  xPosition-= moveAmount;
-  xPositionOffset -= moveAmount;
   while(xPositionOffset > gridDimension){
     xPositionOffset-=gridDimension;
     loadCol(col+gridSize, gameSize-xPositionOffset);
@@ -425,7 +434,54 @@ function panMap(){
     yPositionOffset+=gridDimension;
     loadRow(rowNo-test, -gridDimension-(yPositionOffset%gridDimension));
   }
+}
+
+//--------------------------------------------------------------------------
+//Calculates left positioning of all elements based on player x axis movement
+function panMap(){
+    var moveAmount = null;
+    //Check each tile
+    for(i = 0; i < tileCount; i++){
+      var pLeftOriginal = tiles[i].left;
+      var pTop = tiles[i].top;
+      var newPLeft = pLeftOriginal + xSpeed;
+
+      //Check for clash with player
+      if(!tiles[i].isCreature && !tiles[i].isArrow && newPLeft < playerPosX + playerWidth && newPLeft + gridDimension > playerPosX && playerPosY + playerHeight > pTop && playerPosY < pTop + tiles[i].height){
+        if(xSpeed < 0){
+          newPLeft = playerPosX + playerWidth;
+        } else {
+          newPLeft = playerPosX - gridDimension;
+        }
+      } 
+
+      //Get minimum move amount
+      if(moveAmount == null || (xSpeed < 0 && newPLeft - pLeftOriginal > moveAmount) || (xSpeed > 0 && newPLeft - pLeftOriginal < moveAmount)){
+        moveAmount = newPLeft - pLeftOriginal;
+      }
+    }
+
+  if(moveAmount != 0){
+    //Update tiles left values
+    for(i = 0; i < tileCount; i++){
+      tiles[i].left += moveAmount;
+      if(tiles[i].isCreature && creatures[tiles[i].id].frozen && tiles[i].left > 0 && tiles[i].left < gameSize){ //Unfreeze creatures coming into view
+        creatures[tiles[i].id].frozen = false;
+        activeCreatureCount++;
+      }
+    }
+    if(tileCount > 100){
+      deleteTiles();
+    }
+  }
   
+  if(tileCount < 1){//If not tiles then no clash possible
+    moveAmount = xSpeed;
+  }
+  
+  //Render new rows and columns about to come into view
+  xPosition-= moveAmount;
+  xPositionOffset -= moveAmount;
 }
 
 //--------------------------------------------------------------------------
@@ -440,18 +496,12 @@ function yAccelerate(){
     var pTopOriginal = tiles[i].top;
     var newPTop = pTopOriginal - gravSpeed;
 
-    if(tiles[i].isArrow){
-      var tileHeight = arrowHeight;
-    } else {
-      var tileHeight = gridDimension;
-    }
-
     //Check for clash with player
-    if(!tiles[i].isCreature && !tiles[i].isArrow && pLeft < playerPosX + playerWidth && pLeft + gridDimension > playerPosX && playerPosY + playerHeight > newPTop && playerPosY < newPTop + tileHeight){
+    if(!tiles[i].isCreature && !tiles[i].isArrow && pLeft < playerPosX + playerWidth && pLeft + gridDimension > playerPosX && playerPosY + playerHeight > newPTop && playerPosY < newPTop + tiles[i].height){
         if(gravSpeed > 0){//player falling
           var newPTop = playerPosY + playerHeight;
         } else if(gravSpeed < 0){//Player jumping
-          var newPTop = playerPosY - tileHeight;
+          var newPTop = playerPosY - tiles[i].height;
         }
       }
       //Find minimum move amount possible
@@ -467,25 +517,13 @@ function yAccelerate(){
         jumpCount = 0;
       }
       gravSpeed = 0;
-      
-      
     }
     if(moveAmount != 0){//Move tiles
-      moved = true;
-      //for(i = 0; i < tileCount; i++){
-      
-      //tiles[i].tile.style.top = tiles[i].top + "px";
-    }
-    if(moved){
       for(i = 0; i < tileCount; i++){
         tiles[i].top += moveAmount;
-        if(!(tiles[i].isCreature && creatures[tiles[i].id].frozen) && tiles[i].left + gridDimension > -gridDimension && tiles[i].left < gameSize + gridDimension && tiles[i].top + gridDimension > -gridDimension && tiles[i].top < gameSize + gridDimension){
-          tiles[i].tile.style.cssText +=";top: " + tiles[i].top + "px; left: " + tiles[i].left + "px;";
-          moved = false;
-        }
-        
       }
     }
+   
     yPosition-=moveAmount;
     yPositionOffset-=moveAmount;
   
@@ -507,22 +545,13 @@ window.onkeydown = function(e) {
     } 
     if (key == 39) {
       xSpeed = -playerSpeed; //-->Right
-      if(faceDirection == -1){
-        var x = playerWidth/2.4;
-        headTile.style.cssText += "border-width: "+x+"px 0px "+x+"px "+x+"px;";
-      }
       faceDirection = 1;
     }else if (key == 37) {
       xSpeed = playerSpeed; //<--Left
-      if(faceDirection == 1){
-        var x = playerWidth/2.4;
-        headTile.style.cssText += "border-width: "+x+"px "+x+"px "+x+"px 0px;";
-      }
       faceDirection = -1;
     }
     if(key == 40 && !crouched){//Down\/
       playerHeight -= playerWidth;
-      player.style.cssText += "height: " + playerHeight + "px; top: " + (playerPosY + playerWidth) + "px";
       playerPosY+=playerWidth;
       crouched = true;
     }
@@ -530,33 +559,13 @@ window.onkeydown = function(e) {
       if(!dead){
         paused = !paused;
         if(paused){
-          if(logging){
-            bottomBorder.textContent += " Paused";
-          }
-          pause[0] = createTile(3*gridDimension, 10*gridDimension, 3*gridDimension, 3*gridDimension, "", true);
-          pause[1] = createTile(3*gridDimension, 10*gridDimension, 10*gridDimension, 3*gridDimension, "", true);
-          pause[0].style.backgroundColor = "white";
-          pause[1].style.backgroundColor = "white";
-        } else {
-          pause[0].parentNode.removeChild(pause[0]);
-          pause[1].parentNode.removeChild(pause[1]);
+          ctx.fillStyle = "white";
+          ctx.fillRect(3*gridDimension, 3*gridDimension, 3*gridDimension, 10*gridDimension);
+          ctx.fillRect(10*gridDimension, 3*gridDimension, 3*gridDimension, 10*gridDimension);
         }
-        
       } else {
-        init();
+        init(gameSize);
       }
-    }
-    if(key == 81){//(Q)Slowdown
-      if(logging){
-        frameLength = 80;
-      }
-      
-    }
-    if(key == 68){
-      if(logging){
-        die();
-      }
-      
     }
   }
 
@@ -564,22 +573,13 @@ window.onkeydown = function(e) {
 //Captures key releases
 window.onkeyup = function(e) {
   var key = e.keyCode ? e.keyCode : e.which;
-  if(key == 39 || key == 37){
+  if(key == 39 || key == 37){//Left & Right release
     xSpeed = 0;
   }
-  if(key == 84){//T for test
-    if(logging){
-      timeCheck();
-    } 
-  }
-  if(key == 40){
+  if(key == 40){//Down release
     playerHeight += playerWidth;
-    player.style.cssText += "height: " + playerHeight + "px; top: " + (playerPosY - playerWidth) + "px";
     playerPosY-=playerWidth;
     crouched = false;
-  }
-  if(key == 81){
-    frameLength = 30;
   }
   if(key == 83){//(S)hoot
       shoot();
@@ -588,8 +588,7 @@ window.onkeyup = function(e) {
 
 //--------------------------------------------------------------------------
 //Creates a new div element and adds it to the game container (and tile array)
-function createTile(width, height, xOffset, yOffset, image, dontAdd){
-  var tile = document.createElement("div");
+function createTile(width, height, xOffset, yOffset){
   var rand = Math.floor(Math.random() * 3);
   var bgColor = "#666666";
   if(rand == 0){
@@ -597,27 +596,17 @@ function createTile(width, height, xOffset, yOffset, image, dontAdd){
   } else if(rand == 1){
     bgColor = "#5e5e5e";
   }  
-  tile.style.cssText += "z-index: 2; position: absolute; background-color:" + bgColor + "; width: " + width + "px; height: " + height + "px; left: " + xOffset + "px; top: " + yOffset + "px;";    
-  container.appendChild(tile);
-
-  if(dontAdd){
-    return tile;
-  } else {
-    tiles[tileCount] = new tileObj(tile, xOffset, yOffset, height, false, 0, false, 0);
-    tileCount++;
-  }
+  tiles[tileCount] = new tileObj(xOffset, yOffset, height, false, 0, false, 0, bgColor);
+  tileCount++;
+  
 }
 
 //--------------------------------------------------------------------------
 //Loads a new column to the left or right of whats visibile
 function loadCol(number, position){
   for(i = -(renderDist-1); i < gridSize+renderDist; i++){
-    if(number >= 0 && number < map[0].length && i+rowNo < map.length && i+rowNo >= 0 && map[i+rowNo][number] != 0){
-      if(map[i+rowNo][number] >= 5){
-        //creatures[map[i+rowNo][number]].frozen = false;
-      } else {
-        createTile(gridDimension, gridDimension, position, (i+rowNo)*gridDimension-yPosition, "");
-      }
+    if(number >= 0 && number < map[0].length && i+rowNo < map.length && i+rowNo >= 0 && map[i+rowNo][number] != 0 && map[i+rowNo][number] < 5){
+      createTile(gridDimension, gridDimension, position, (i+rowNo)*gridDimension-yPosition);
     }
   }
 }
@@ -628,12 +617,8 @@ function loadRow(number, position){
   if(number < map.length && number >= 0){
     var row = map[number];
     for(i = -(renderDist-1); i < gridSize+renderDist; i++){
-      if(i+col < row.length && i+col >= 0 && row[i+col] != 0){
-        if(row[i+col] >= 5){
-          //creatures[map[i+rowNo][number]].frozen = false;
-        } else {
-          createTile(gridDimension, gridDimension, (i+col)*gridDimension-xPosition, position, "");
-        }
+      if(i+col < row.length && i+col >= 0 && row[i+col] != 0 && row[i+col] < 5){
+        createTile(gridDimension, gridDimension, (i+col)*gridDimension-xPosition, position); 
       }
     }
   } 
@@ -647,19 +632,9 @@ function renderCreatures(){
       if(map[j][i] >= 5){
         var xOffset = ((i*gridDimension)-xPosition);
         var yOffset = (((j-1)*gridDimension)-yPosition);
-        var newCreature = createTile(gridDimension, gridDimension, gameSize, 0, "", true);
-        newCreature.style.cssText += "border-color:rgb(55,142,61); border-style: solid; box-sizing: border-box; background-color: #7fba6f; border-width: 0px "+gridDimension/3 + "px "+gridDimension/3 +"px "+gridDimension/3 +"px;";
-        var head = document.createElement("div");
-        head.style.cssText += ";position: absolute; z-index: 4; width: " + playerWidth + "px; height: " + playerWidth + "px; background-color: #73ba60; left: " + -(playerWidth/3) + "px; border-bottom: 2px solid green";//change this
-        var eye = document.createElement("div");
-        eye.style.cssText += "border-width: "+gridDimension/12+"px "+gridDimension/8+"px "+gridDimension/12+"px "+gridDimension/24+"px; top: "+gridDimension/4+"px;left: "+gridDimension/12+"px;height: "+gridDimension/3+"px;width: " + gridDimension/3 + "px;border-color: white;border-style: solid;box-sizing: border-box;background-color: black;position: absolute;"
-        
-        head.appendChild(eye);
-        newCreature.appendChild(head);
-        newCreature.style.height = (2*gridDimension) +"px";
-        tiles[tileCount] = new tileObj(newCreature, xOffset, yOffset, 2*gridDimension, false, 0, true, map[j][i]);
+        tiles[tileCount] = new tileObj(xOffset, yOffset, 2*gridDimension, false, 0, true, map[j][i], "#000000");
         tileCount++;
-        creatures[map[j][i]]= new creature(newCreature, head, eye, 0, creatureHealth, true, -1);
+        creatures[map[j][i]]= new creature(0, creatureHealth, true, -1);
         creatureCount++;
       }
     }
@@ -676,15 +651,15 @@ function moveCreatures(){
     var intendsToJump = false;
     var jumpConfirmed = false;
     var move = creatures[tiles[i].id].direction * creatureSpeed;
+
+    //Calculate direction
     if(tiles[i].left < playerPosX){
       if(creatures[tiles[i].id].direction != 1){
         creatures[tiles[i].id].direction = 1;
-        creatures[tiles[i].id].eye.style.cssText += "border-width: "+gridDimension/12+"px "+gridDimension/24+"px "+gridDimension/12+"px "+gridDimension/8+"px; left: "+gridDimension/2+"px;"
       }
     } else {
       if(creatures[tiles[i].id].direction != -1){
         creatures[tiles[i].id].direction = -1;
-        creatures[tiles[i].id].eye.style.cssText += "border-width: "+gridDimension/12+"px "+gridDimension/8+"px "+gridDimension/12+"px "+gridDimension/24+"px; left: "+gridDimension/12+"px;"
       }
     }
     var creature = tiles[i];
@@ -694,6 +669,8 @@ function moveCreatures(){
         continue;
       }
       var block = tiles[j];
+
+      //Check for clashes
       if(newLeft < block.left + gridDimension && newLeft + gridDimension > block.left && creature.top + (2*gridDimension) > block.top && creature.top < block.top + gridDimension){
         intendsToJump = true;
         if(move > 0){ //-->
@@ -729,11 +706,12 @@ function moveCreatures(){
     var newTop = creature.top + creatures[creature.id].cGravSpeed;
 
     for(j = 0; j < tileCount; j++){
-      if(tiles[j].isArrow || tiles[j].isCreature){//|| i==j ||(tiles[j].isCreature && creatures[tiles[j].id].frozen)){
+      if(tiles[j].isArrow || tiles[j].isCreature){
         continue;
       }
       var block = tiles[j];
-      if(creature.left < block.left + gridDimension && creature.left + gridDimension > block.left && newTop + (2*gridDimension) > block.top && newTop < block.top + gridDimension){         
+      //Check for clashes
+      if(creature.left < block.left + gridDimension && creature.left + gridDimension > block.left && newTop + creature.height > block.top && newTop < block.top + gridDimension){         
         if(creatures[creature.id].cGravSpeed > 0){//creature falling
           var newTopT = block.top - (gridDimension*2);
           if(newTopT < newTop){
@@ -758,7 +736,6 @@ function moveCreatures(){
       creatures[creature.id].cGravSpeed = -creatureJumpSpeed;
     }
     creature.top = newTop;
-    creature.tile.style.cssText += "left: " + newLeft + "px; top: " + newTop + "px;";
   }
 }
 
@@ -769,17 +746,13 @@ function deleteTiles(){
     if(tiles[i].isArrow){
       continue;
     }
-
-    var left = tiles[i].left;
-    var top = tiles[i].top;
-    if(left < -(xDeleteDist*gridDimension)||  left > gameSize + ((xDeleteDist-1)*gridDimension) || top < -(yDeleteDist*gridDimension) || top > gameSize + ((yDeleteDist-1)*gridDimension)){
-      if(tiles[i].isCreature){
+    if(tiles[i].left < -(xDeleteDist*gridDimension)||  tiles[i].left > gameSize + ((xDeleteDist-1)*gridDimension) || tiles[i].top < -(yDeleteDist*gridDimension) || tiles[i].top > gameSize + ((yDeleteDist-1)*gridDimension)){
+      if(tiles[i].isCreature){ //Freeze creature
         if(!creatures[tiles[i].id].frozen && creatures[tiles[i].id].health > 0){
           creatures[tiles[i].id].frozen = true;
           activeCreatureCount--;
         }
-      } else {
-        container.removeChild(tiles[i].tile);
+      } else { //Unload tile
         tiles.splice(i,1);
         tileCount--;
       }
@@ -790,16 +763,11 @@ function deleteTiles(){
 //--------------------------------------------------------------------------
 //Creates new arrow element
 function shoot(){
-  var arrow = document.createElement("div");
   var left = playerPosX + (faceDirection*playerWidth) + playerWidth;
-  var borderCSS = "border-left: " + (gridDimension/6) + "px solid black;";
   if(faceDirection == 1){
-    left -= playerWidth;
-    var borderCSS = "border-right: " + (gridDimension/6) + "px solid black;";
+    left -= 2*playerWidth;
   }
-  arrow.style.cssText += "z-index: 2; position: absolute; background-color: white; width: " + (gridDimension/2) + "px; height: " + arrowHeight + "px; left: " + left + "px; top: " + (playerPosY + playerWidth) + "px;" + borderCSS;
-  container.appendChild(arrow);
-  tiles[tileCount] = new tileObj(arrow, left, playerPosY + playerWidth, arrowHeight, true, faceDirection, false, 0);
+  tiles[tileCount] = new tileObj(left, playerPosY + playerWidth + playerWidth/4, arrowHeight, true, faceDirection, false, 0, "#000000");
   tileCount++;
   arrowCount++;
 }
@@ -814,58 +782,30 @@ function moveArrows(){
     tiles[i].left += (arrowSpeed*tiles[i].direction);
     var clash = false;
     for(j = 0; j < tileCount; j++){
-      if(tiles[j].top < tiles[i].top + arrowHeight && tiles[j].top+tiles[j].height > tiles[i].top && tiles[j].left < tiles[i].left && tiles[j].left + gridDimension > tiles[i].left){
+      //Check for clashes
+      if(!tiles[j].isArrow && tiles[j].top < tiles[i].top + arrowHeight && tiles[j].top+tiles[j].height > tiles[i].top && tiles[j].left < tiles[i].left + gridDimension && tiles[j].left + gridDimension > tiles[i].left){
         clash = true;
+        //Do damage to creatures
         if(tiles[j].isCreature && !creatures[tiles[j].id].frozen &&creatures[tiles[j].id].health > 0){
           creatures[tiles[j].id].health -= 1;
-          var val = (255 - (40*creatures[tiles[j].id].health));
-          creatures[tiles[j].id].tile.style.borderColor = "rgb(" + (255 - (40*creatures[tiles[j].id].health)) + ",142,61)";
-          creatures[tiles[j].id].head.style.borderColor = "rgb(" + (255 - (40*creatures[tiles[j].id].health)) + ",142,61)";
+          //Kill creature
           if(creatures[tiles[j].id].health < 1){
-            tiles[j].tile.parentNode.removeChild(tiles[j].tile);
             tiles.splice(j, 1);
             tileCount--;
             i--;
             activeCreatureCount--;
             creatureCount--;
             score += 25;
-            scoreTile.textContent = score;
             break;
           }
         }
       }
     }
-
-    if(clash || tiles[i].left > 1000 || tiles[i].left < -1000){
-      tiles[i].tile.parentNode.removeChild(tiles[i].tile);
+    //Remove arrows that hit someting or are too far off screen
+    if(clash || tiles[i].left > gameSize*2 || tiles[i].left < -(gameSize*2)){
       tiles.splice(i, 1);
       arrowCount--;
       tileCount--;
-    } else {
-      tiles[i].tile.style.left = tiles[i].left + "px";
-    }  
+    } 
   }
-}
-
-//--------------------------------------------------------------------------
-//Test time for 10000 frames of strafing right and left (For development)
-function timeCheck() {
-  console.log("Go!");
-  var iterations = 10000;
-  xSpeed = -1;
-  var startTime = Date.now();
-  while(iterations > 0){
-    updateFrame();
-    iterations--;
-    if((iterations % 2000) == 0){
-      xSpeed =- xSpeed;
-      console.log("Switch direction");
-    }
-  }
-  var endTime = Date.now();
-  var timeTaken = parseInt(endTime - startTime);
-  var fps = parseInt(10000000/timeTaken);
-  console.log("Time: " + timeTaken + "ms, thats " + fps + "fps");
-  paused = true;
-  bottomBorder.textContent = ("Time: " + timeTaken + "ms, thats " + fps + "fps"); 
 }
