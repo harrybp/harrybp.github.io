@@ -6,12 +6,13 @@
   body {
     overflow: hidden;
     background-color: #b3c6af;
+    text-align: center;
   }
   </style>
 </head>
 <body>
 
-  <div style="margin: auto;">
+  
   <script>
  
 /*
@@ -263,7 +264,7 @@ function updateFrame(){
 //Initialise game state, create all elements
 function init(){
   paused = true;
-  calculateSize(384);
+  calculateSize(128);
   // Create the canvas
   if(canvas != null){
     canvas.parentNode.removeChild(canvas);
@@ -274,7 +275,7 @@ function init(){
   canvas.width = gameSize;
   canvas.height = gameSize;
   canvas.style.cssText += "display:block; border: 2px solid white; margin: auto; width: " + gameSize + "px; height: " + gameSize + "px;";
-  document.body.appendChild(canvas);
+  document.body.insertBefore(canvas, document.body.firstChild);
 
   //Reset variables
   gravSpeed = score = damageTime = maxCol = jumpCount = xSpeed = xPosition = xPositionOffset = yPosition = yPositionOffset = col = rowNo = arrowCount = creatureCount = activeCreatureCount =tileCount = 0;
@@ -811,5 +812,7 @@ function timeCheck() {
   bottomBorder.textContent = ("Time: " + timeTaken + "ms, thats " + fps + "fps"); 
 }
 </script>
-</div>
+<h4>Controls</h4>
+<p><b>Left/Right Arrows:</b> Move<br><b>Up Arrow:</b> Jump/Double Jump<br><b>Down Arrow:</b> Duck<br><b>S:</b> Shoot<br><b>P:</b> Pause</p>
+
 </body>
