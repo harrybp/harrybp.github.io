@@ -11,10 +11,7 @@
   </style>
 </head>
 <body>
-
-  
-  <script>
- 
+<script>
 /*
 * Game by Harry BP
 */
@@ -26,6 +23,14 @@ function draw(){
   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
   //Draw player
+  if(faceDirection == -1){
+    ctx.strokeStyle = "#725f35";
+    ctx.lineWidth=gridDimension/8;
+    ctx.beginPath();
+    ctx.moveTo(playerPosX + playerWidth/4, playerPosY + playerWidth - playerWidth/4);
+    ctx.bezierCurveTo(playerPosX - playerWidth/2,playerPosY + playerWidth - playerWidth/4,playerPosX - playerWidth/2,playerPosY + playerWidth + playerWidth/2 + playerWidth/2,playerPosX + playerWidth/4, playerPosY + playerWidth + playerWidth/2 + playerWidth/2);
+    ctx.stroke();
+  }
   //Body
   ctx.fillStyle = "#849dbc";
   ctx.fillRect(playerPosX, playerPosY, playerWidth, playerHeight);
@@ -51,6 +56,24 @@ function draw(){
   }
   ctx.closePath();
   ctx.fill();
+ 
+  //playerPosY + playerWidth + playerWidth/4
+  if(faceDirection == 1){
+    ctx.strokeStyle = "#87703f";
+    ctx.lineWidth=gridDimension/8;
+    ctx.beginPath();
+    ctx.moveTo(playerPosX + 3*playerWidth/4, playerPosY + playerWidth - playerWidth/4);
+    ctx.bezierCurveTo(playerPosX + playerWidth*1.5,playerPosY + playerWidth - playerWidth/4,playerPosX + playerWidth*1.5,playerPosY + playerWidth + playerWidth/2 + playerWidth/2,playerPosX + 3*playerWidth/4, playerPosY + playerWidth + playerWidth/2 + playerWidth/2);
+    ctx.stroke();
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = gridDimension/16;
+    ctx.beginPath();
+    ctx.moveTo(playerPosX + 3*playerWidth/4, playerPosY + playerWidth - playerWidth/4);
+    ctx.lineTo(playerPosX + playerWidth/2, playerPosY + playerWidth + playerWidth/2);
+    ctx.lineTo(playerPosX + 3*playerWidth/4, playerPosY + playerWidth + playerWidth/2 + playerWidth/2);
+    ctx.stroke();
+  } 
+  
 
   for(x = 0; x < tileCount; x++){
     if(tiles[x].left + gridDimension < 0 || tiles[x].left > gameSize || tiles[x].top + gridDimension < 0 || tiles[x].top > gameSize)
@@ -165,8 +188,7 @@ var creatureAbudance = 3; //One in x
 
 //--------------------------------------------------------------------------
 //Calculate all element sizes from game size
-//384
-
+//128/256/384/512/
 function calculateSize(x){
   gameSize = parseInt(x);
   playerWidth = gameSize/16;
@@ -183,12 +205,10 @@ function calculateSize(x){
   startY = gameSize/2;
   arrowSpeed = gravity*4;
   arrowHeight = gameSize/64;
-  
 }
 
 //--------------------------------------------------------------------------
 //Game state
-
 //Arrays
 var creatures, tiles;
 //Counts
@@ -197,6 +217,8 @@ var tileCount, arrowCount, creatureCount, activeCreatureCount;
 var xSpeed, crouched, faceDirection, health, dead, maxCol, score, damageTime, jumpCount, gravSpeed, paused;
 //Position
 var xPosition , xPositionOffset, yPosition, yPositionOffset, col, rowNo;
+//Stats
+var maxLen;
 
 //--------------------------------------------------------------------------
 //Object constructors
@@ -221,7 +243,13 @@ function creature(cGravSpeed, health, frozen, direction){
 //--------------------------------------------------------------------------
 //On load
 window.onload = function(){
-  init();
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var c = url.searchParams.get("size");
+  if(c == null){
+    c = 3;
+  }
+  init(parseInt(c*128));
 }
 
 //--------------------------------------------------------------------------
@@ -243,6 +271,7 @@ function step(timestamp){
 //--------------------------------------------------------------------------
 //Called at regular intervals to update positions of everything on screen
 function updateFrame(){
+  var start = performance.now();
   //Move objects
   if(arrowCount > 0){
     moveArrows();
@@ -258,13 +287,19 @@ function updateFrame(){
     score++;
   }
   draw();
+  //Stats
+  var end = (performance.now() - start);
+  if(end > maxLen){
+    maxLen = end;
+  }
+  document.getElementById("info").textContent = end.toFixed(2) + " : " + maxLen.toFixed(2);
 }
 
 //--------------------------------------------------------------------------
 //Initialise game state, create all elements
-function init(){
+function init(size){
   paused = true;
-  calculateSize(384);
+  calculateSize(size);
   // Create the canvas
   if(canvas != null){
     canvas.parentNode.removeChild(canvas);
@@ -278,7 +313,7 @@ function init(){
   document.body.insertBefore(canvas, document.body.firstChild);
 
   //Reset variables
-  gravSpeed = score = damageTime = maxCol = jumpCount = xSpeed = xPosition = xPositionOffset = yPosition = yPositionOffset = col = rowNo = arrowCount = creatureCount = activeCreatureCount =tileCount = 0;
+  gravSpeed = score = damageTime = maxCol = jumpCount = xSpeed = xPosition = xPositionOffset = yPosition = yPositionOffset = col = maxLen = rowNo = arrowCount = creatureCount = activeCreatureCount =tileCount = 0;
   crouched = false;
   faceDirection = 1;
   creatures = [];
@@ -543,7 +578,7 @@ window.onkeydown = function(e) {
           ctx.fillRect(10*gridDimension, 3*gridDimension, 3*gridDimension, 10*gridDimension);
         }
       } else {
-        init();
+        init(gameSize);
       }
     }
   }
@@ -746,7 +781,7 @@ function shoot(){
   if(faceDirection == 1){
     left -= 2*playerWidth;
   }
-  tiles[tileCount] = new tileObj(left, playerPosY + playerWidth, arrowHeight, true, faceDirection, false, 0, "#000000");
+  tiles[tileCount] = new tileObj(left, playerPosY + playerWidth + playerWidth/4, arrowHeight, true, faceDirection, false, 0, "#000000");
   tileCount++;
   arrowCount++;
 }
@@ -788,31 +823,9 @@ function moveArrows(){
     } 
   }
 }
-
-//--------------------------------------------------------------------------
-//Test time for 10000 frames of strafing right and left (For development)
-function timeCheck() {
-  console.log("Go!");
-  var iterations = 10000;
-  xSpeed = -1;
-  var startTime = Date.now();
-  while(iterations > 0){
-    updateFrame();
-    iterations--;
-    if((iterations % 2000) == 0){
-      xSpeed =- xSpeed;
-      console.log("Switch direction");
-    }
-  }
-  var endTime = Date.now();
-  var timeTaken = parseInt(endTime - startTime);
-  var fps = parseInt(10000000/timeTaken);
-  console.log("Time: " + timeTaken + "ms, thats " + fps + "fps");
-  paused = true;
-  bottomBorder.textContent = ("Time: " + timeTaken + "ms, thats " + fps + "fps"); 
-}
 </script>
 <h4>Controls</h4>
 <p><b>Left/Right Arrows:</b> Move<br><b>Up Arrow:</b> Jump/Double Jump<br><b>Down Arrow:</b> Duck<br><b>S:</b> Shoot<br><b>P:</b> Pause</p>
+<p id="info"></p>
 
 </body>
