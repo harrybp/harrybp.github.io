@@ -1,7 +1,7 @@
 /*
 * Game by Harry BP
 */
-map = [];
+map = null;
 function draw(){
   if(paused)
     return;
@@ -9,6 +9,7 @@ function draw(){
   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
   //Draw player
+  //Bow if facing left
   if(faceDirection == -1){
     ctx.strokeStyle = "#725f35";
     ctx.lineWidth=gridDimension/8;
@@ -43,7 +44,7 @@ function draw(){
   ctx.closePath();
   ctx.fill();
  
-  //playerPosY + playerWidth + playerWidth/4
+  //Bow if facing right
   if(faceDirection == 1){
     ctx.strokeStyle = "#87703f";
     ctx.lineWidth=gridDimension/8;
@@ -60,7 +61,6 @@ function draw(){
     ctx.stroke();
   } 
   
-
   for(x = 0; x < tileCount; x++){
     if(tiles[x].left + gridDimension < 0 || tiles[x].left > gameSize || tiles[x].top + gridDimension < 0 || tiles[x].top > gameSize)
       continue;
@@ -88,9 +88,9 @@ function draw(){
       //Eyeball
       ctx.fillStyle = "black";
       ctx.fillRect(tiles[x].left + z + y, tiles[x].top + gridDimension/3 + gridDimension/12, gridDimension/8, gridDimension/8);
-
+    }
     //Draw arrows
-    } else if(tiles[x].isArrow){
+    if(tiles[x].isArrow){
       ctx.fillStyle = "#9b7d58";
       if(faceDirection == 1){
         ctx.fillRect(tiles[x].left,tiles[x].top,gridDimension - ((2*gridDimension)/8),tiles[x].height);
@@ -109,7 +109,15 @@ function draw(){
       }
       ctx.closePath();
       ctx.fill();
-    }else {
+    }
+  }
+  ctx.fillStyle = "#ff670f";
+  ctx.fillRect(0, gameSize-(yPosition) + (7*gridDimension) + gridDimension/4 , gameSize, gameSize);
+  for(x = 0; x < tileCount; x++){
+    if(tiles[x].left + gridDimension < 0 || tiles[x].left > gameSize || tiles[x].top + gridDimension < 0 || tiles[x].top > gameSize)
+      continue;
+
+    if(!tiles[x].isArrow && !tiles[x].isCreature){
 
       //Draw tiles
       ctx.fillStyle = tiles[x].color;
@@ -145,6 +153,8 @@ function draw(){
   ctx.font= ((10/128)*gameSize) +"px Arial Black";
   ctx.fillStyle = "white";
   ctx.fillText(score, gridDimension, 2*gridDimension, 2*gridDimension);
+
+  
 }
 
 //--------------------------------------------------------------------------
@@ -206,6 +216,11 @@ var xPosition , xPositionOffset, yPosition, yPositionOffset, col, rowNo;
 //Stats
 var maxLen;
 
+var circleYCenter;
+var creatureSpawns;
+var distCount;
+var chunksGenerated;
+var lastRadius;
 //--------------------------------------------------------------------------
 //Object constructors
 function tileObj(left, top, height, isArrow, direction, isCreature, id, color){
@@ -268,9 +283,25 @@ function updateFrame(){
   yAccelerate();
   panMap();
   loadTiles();
+
+  //Generate new chunks
+  if(maxCol%50 == 20 && maxCol != distCount){
+    var type = Math.floor(Math.random() * 2)+1;
+    console.log(type);
+    genMap(0,type);
+    chunksGenerated++;
+    renderCreatures(50*chunksGenerated);
+    distCount = maxCol;
+  }
   if(col > maxCol){
     maxCol = col;
     score++;
+  }
+  if(rowNo > 12){
+    loseHealth(5);
+    if(rowNo > 17){
+      die();
+    }
   }
   draw();
   //Stats
@@ -299,7 +330,8 @@ function init(size){
   document.body.insertBefore(canvas, document.body.firstChild);
 
   //Reset variables
-  gravSpeed = score = damageTime = maxCol = jumpCount = xSpeed = xPosition = xPositionOffset = yPosition = yPositionOffset = col = maxLen = rowNo = arrowCount = creatureCount = activeCreatureCount =tileCount = 0;
+  gravSpeed = score = damageTime = maxCol = jumpCount = xSpeed = xPosition = xPositionOffset = yPosition = yPositionOffset = col = maxLen = rowNo = arrowCount = creatureCount = activeCreatureCount =tileCount = distCount = chunksGenerated = lastRadius = 0;
+  
   crouched = false;
   faceDirection = 1;
   creatures = [];
@@ -316,8 +348,10 @@ function init(size){
   rowNo = Math.floor(yPosition/gridDimension);
 
   //Generate map and load tiles
-  genMap();
-  renderCreatures(); 
+  circleYCenter = 16;
+  creatureSpawns = 0;
+  genMap(14,1);
+  renderCreatures(0); 
   for(x = -1; x < gridSize + 1; x++){
     loadCol(x+col,x*gridDimension);
   }
@@ -326,28 +360,29 @@ function init(size){
 
 //--------------------------------------------------------------------------
 //Randomly generate map
-function genMap(){
-  var length = 1000;
+function genMap(start, type){
+  //type = 2;
+  var length = 50;
   var height = 30;
   var leeway = 7;
+  if(type == 1){
+    leeway = 8;
+  }
   var minRadius = 3;
 
   //Initialise arrays
-  map = [];
+  var newChunk = [];
   for(i = 0; i < height; i++){
-    map.push([])
+    newChunk.push([])
   }
   for(i = 0; i < height; i++){
     for(j = 0; j < length; j++){
-      map[i][j] = 1;
+      newChunk[i][j] = type;
     }
   }
 
   //Generate
-  var creatureSpawns = 0;
-  var circleYCenter = 16;
-  for(circleXCenter = 10; circleXCenter < length; circleXCenter+= 2){
-    //console.log(circleXCenter);
+  for(circleXCenterCurrent = start; circleXCenterCurrent < length; circleXCenterCurrent+= 2){
     if(circleYCenter < minRadius + leeway){
       change = 3;
     } else if(circleYCenter > (height-minRadius-leeway)){
@@ -367,20 +402,76 @@ function genMap(){
     var cBottom = height - leeway - circleYCenter;
     var maxRadius = Math.min(cTop, cBottom);
     var isCreature = Math.floor(Math.random() * (creatureAbudance - 1 + 1) + 1);
-    var radius = Math.floor(Math.random() * (maxRadius - minRadius + 1) + minRadius);
+    if(circleXCenterCurrent == 0){
+      radius = lastRadius;
+    } else {
+      var radius = Math.floor(Math.random() * (maxRadius - minRadius + 1) + minRadius);
+    }
+    //console.log(circleYCenter);
     for(i = 0; i < height; i++){
       for(j = 0; j < length; j++){
-        var  x = Math.sqrt(Math.pow(Math.abs(circleYCenter-i),2) + Math.pow(Math.abs(circleXCenter-j),2));
+        var  x = Math.sqrt(Math.pow(Math.abs(circleYCenter-i),2) + Math.pow(Math.abs(circleXCenterCurrent-j),2));
         if(x< radius){
-          map[i][j] = 0;
+          newChunk[i][j] = 0;
         }
       }
     }
-    if(isCreature == 1 && circleXCenter > 25){
-      map[circleYCenter+radius][circleXCenter] = creatureSpawns + 5;
+    if(isCreature == 1 && (start == 0 || circleXCenterCurrent > 25)){
+      console.log("c");
+      newChunk[circleYCenter+radius][circleXCenterCurrent] = creatureSpawns + 5;
       creatureSpawns++;
     }
+    if(circleXCenterCurrent == length-2)
+      lastRadius = radius;
   }
+  
+  //Generate craters
+  if(type == 2){
+    var lastCrater = -5;
+    //Loop along length
+    for(j = 0; j < length; j++){
+      var isCrater = Math.floor(Math.random() * (25 - 1 + 1) + 1);
+      
+      //New crater
+      if(isCrater == 5 && j > lastCrater +5){
+        lastCrater = j;
+        circleX = j;
+        console.log("C");
+        var land = false;
+        //Loop down height
+        for(i = 0; i < height; i++){
+          if(newChunk[i][j] == 0){
+            land = true;
+          }
+          //Reach floor
+          if(land && newChunk[i][j] == 2){
+            //Cut circles
+            circleY = i;
+            var rad = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+            for(p = i-4; p < i+4 && p < height; p++){
+              for(q = j-4; q < j+4; q++){
+                var  x = Math.sqrt(Math.pow(Math.abs(circleY-p),2) + Math.pow(Math.abs(circleX-q),2));
+                if(x< rad){
+                  newChunk[p][q] = 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if(map == null){
+    map = newChunk;
+  } else{
+    for(i = 0; i < height; i++){
+      for(j = 0; j < length; j++){
+        map[i].push(newChunk[i][j]);
+      } 
+    }
+  }
+
 }
 
 //--------------------------------------------------------------------------
@@ -534,15 +625,18 @@ function yAccelerate(){
 window.onkeydown = function(e) {
     var key = e.keyCode ? e.keyCode : e.which;
     if(key == 38){
-      if(jumpCount < 2){
-        if(jumpCount < 1){//Jump
-          gravSpeed = -jumpSpeed;
-        } else {//Double jump
-          gravSpeed = -jumpSpeed+2;
+      if(!crouched){
+        
+        if(jumpCount < 2){
+          if(jumpCount < 1){//Jump
+            gravSpeed = -jumpSpeed;
+          } else {//Double jump
+            gravSpeed = -jumpSpeed+2;
+          }
+          jumpCount ++;
         }
-        jumpCount ++;
-      }
-    } 
+      } 
+    }
     if (key == 39) {
       xSpeed = -playerSpeed; //-->Right
       faceDirection = 1;
@@ -556,6 +650,7 @@ window.onkeydown = function(e) {
       crouched = true;
     }
     if(key == 80){//(P)ause
+      console.log(rowNo);
       if(!dead){
         paused = !paused;
         if(paused){
@@ -588,14 +683,23 @@ window.onkeyup = function(e) {
 
 //--------------------------------------------------------------------------
 //Creates a new div element and adds it to the game container (and tile array)
-function createTile(width, height, xOffset, yOffset){
+function createTile(width, height, xOffset, yOffset, type){
   var rand = Math.floor(Math.random() * 3);
-  var bgColor = "#666666";
-  if(rand == 0){
-    bgColor = "#727272";
-  } else if(rand == 1){
-    bgColor = "#5e5e5e";
-  }  
+  if(type == 1){
+    var bgColor = "#666666";
+    if(rand == 0){
+      bgColor = "#727272";
+    } else if(rand == 1){
+      bgColor = "#5e5e5e";
+    }  
+  } else if(type ==2){
+    var bgColor = "#7f3535";
+    if(rand == 0){
+      bgColor = "#632b2b";
+    } else if(rand == 1){
+      bgColor = "#701f1f";
+    }  
+  }
   tiles[tileCount] = new tileObj(xOffset, yOffset, height, false, 0, false, 0, bgColor);
   tileCount++;
   
@@ -606,7 +710,7 @@ function createTile(width, height, xOffset, yOffset){
 function loadCol(number, position){
   for(i = -(renderDist-1); i < gridSize+renderDist; i++){
     if(number >= 0 && number < map[0].length && i+rowNo < map.length && i+rowNo >= 0 && map[i+rowNo][number] != 0 && map[i+rowNo][number] < 5){
-      createTile(gridDimension, gridDimension, position, (i+rowNo)*gridDimension-yPosition);
+      createTile(gridDimension, gridDimension, position, (i+rowNo)*gridDimension-yPosition, map[i+rowNo][number]);
     }
   }
 }
@@ -618,7 +722,7 @@ function loadRow(number, position){
     var row = map[number];
     for(i = -(renderDist-1); i < gridSize+renderDist; i++){
       if(i+col < row.length && i+col >= 0 && row[i+col] != 0 && row[i+col] < 5){
-        createTile(gridDimension, gridDimension, (i+col)*gridDimension-xPosition, position); 
+        createTile(gridDimension, gridDimension, (i+col)*gridDimension-xPosition, position, row[i+col]); 
       }
     }
   } 
@@ -626,9 +730,10 @@ function loadRow(number, position){
 
 //--------------------------------------------------------------------------
 //Scans the map for creatures, creates them and adds them to creatures and tile array
-function renderCreatures(){
+function renderCreatures(start){
+  var x = 0;
   for(j = 0; j < map.length; j++){
-    for(i = 0; i < map[j].length; i++){
+    for(i = start; i < map[j].length; i++){
       if(map[j][i] >= 5){
         var xOffset = ((i*gridDimension)-xPosition);
         var yOffset = (((j-1)*gridDimension)-yPosition);
