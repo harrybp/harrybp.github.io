@@ -418,8 +418,8 @@ function genMap(start, type){
     }
     if(isCreature == 1 && (start == 0 || circleXCenterCurrent > 25)){
       console.log("c");
-      newChunk[circleYCenter+radius][circleXCenterCurrent] = creatureSpawns + 5;
-      creatureSpawns++;
+      newChunk[circleYCenter+radius][circleXCenterCurrent] = 5;
+      
     }
     if(circleXCenterCurrent == length-2)
       lastRadius = radius;
@@ -737,10 +737,11 @@ function renderCreatures(start){
       if(map[j][i] >= 5){
         var xOffset = ((i*gridDimension)-xPosition);
         var yOffset = (((j-1)*gridDimension)-yPosition);
-        tiles[tileCount] = new tileObj(xOffset, yOffset, 2*gridDimension, false, 0, true, map[j][i], "#000000");
+        tiles[tileCount] = new tileObj(xOffset, yOffset, 2*gridDimension, false, 0, true, creatureSpawns, "#000000");
         tileCount++;
-        creatures[map[j][i]]= new creature(0, creatureHealth, true, -1);
+        creatures[creatureSpawns]= new creature(0, creatureHealth, true, -1);
         creatureCount++;
+        creatureSpawns++;
       }
     }
   }
