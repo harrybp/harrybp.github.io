@@ -1,5 +1,5 @@
 var JoydivModule;
-(function (JoydivModule) {
+    (function (JoydivModule) {
     var Direction = (function () {
         function Direction(offset) {
             this.offset = {
@@ -90,8 +90,8 @@ var JoydivModule;
             var onTrackerScreenPos = function (e, origin) {
                 var x = 2 * (e.screenX - origin.x) / _this.rootElement.clientWidth;
                 var y = 2 * (e.screenY - origin.y) / _this.rootElement.clientHeight;
-                _this.tracker.style.left = (x + 0.5) * 100 + "%";
-                _this.tracker.style.top = (y + 0.5) * 100 + "%";
+                _this.tracker.style.left = (x + 0.5) * 33 + "%";
+                _this.tracker.style.top = (y + 0.5) * 33 + "%";
                 return new Direction({
                     x: x,
                     y: -y
@@ -117,7 +117,7 @@ var JoydivModule;
                         _this.addVote(onTrackerScreenPos(e, origin), 'tracker-mouse');
                     }
                 }, true);
-                document.addEventListener('mouseup', unmount, true);
+                _this.trackpad.addEventListener('mouseup', unmount, true);
             })();
             (function () {
                 var origin = null;
@@ -134,8 +134,8 @@ var JoydivModule;
                 var unmount = function () {
                     origin = null;
                     touchId = null;
-                    _this.tracker.style.left = "50%";
-                    _this.tracker.style.top = "50%";
+                    _this.tracker.style.left = "25%";
+                    _this.tracker.style.top = "25%";
                     _this.removeVote('tracker-touch');
                 };
                 document.addEventListener('touchmove', function (e) {
@@ -293,5 +293,4 @@ var JoydivModule;
         return Joydiv;
     })();
     JoydivModule.Joydiv = Joydiv;    
-})(JoydivModule || (JoydivModule = {}));
-
+  })(JoydivModule || (JoydivModule = {}));
