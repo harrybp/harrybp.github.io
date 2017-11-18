@@ -668,7 +668,19 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     var container = document.getElementById("controller");
     var right = document.getElementById("rstick");
     var left = document.getElementById("lstick");
+    var shootBtn = document.getElementById("shootBtn");
+    var btnCss = "left:" + (gameSize - gameSize/4) + "px; width: " + gameSize/8 + "px; height:" + gameSize/8 + "px; border-radius: 50%;"
+    shootBtn.style.cssText += btnCss + "top:" + (window.innerHeight - gameSize/4 + gameSize/16) + "px;";
+    var jumpBtn = document.getElementById("jumpBtn");
+    jumpBtn.style.cssText += btnCss + "top:" + (window.innerHeight - 2*gameSize/4 + gameSize/16) + "px; background-color: red;"
     //console.log(height);
+    jumpBtn.addEventListener("touchstart", function(e){
+      jump();
+    });
+    shootBtn.addEventListener("touchstart", function(e){
+      shoot();
+    });
+
     container.style.cssText += "position: relative;height:" + width + "px;width:" + width + "px; font-size:" + width + "px;";
     right.style.cssText += "border-width: "+width*0.75/2+"px 0px "+width*0.75/2+"px 50px;";
     left.style.cssText += "border-width: "+width*0.75/2+"px 50px "+width*0.75/2+"px 0px;";
@@ -676,6 +688,34 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     var joydiv = new JoydivModule.Joydiv({'element':element});
     element.addEventListener('joydiv-changed',function(e){
       document.getElementById('direction').value = joydiv.getOneOf8Directions().name;
+      var value = joydiv.getOneOf8Directions().name;
+      switch(value){
+        case "down-left":
+          crouch();
+          goLeft();
+          break;
+        case "down":
+          crouch();
+          break;
+        case "left":
+        case "up-left":
+          unCrouch();
+          goLeft();
+          break;
+        case "down-right":
+          crouch();
+          goRight();
+          break;
+        case "right":
+        case "up-right":
+          unCrouch();
+          goRight();
+          break;
+        default:
+          stopMoving();
+          unCrouch();
+
+      }
     });
   }
 
@@ -1019,14 +1059,20 @@ function goRight(){
   faceDirection = 1;
 }
 function crouch(){
-  playerHeight -= playerWidth;
-  playerPosY+=playerWidth;
-  crouched = true;
+  if(!crouched){
+    playerHeight -= playerWidth;
+    playerPosY+=playerWidth;
+    crouched = true;
+
+  }
 }
 function unCrouch(){
-  playerHeight += playerWidth;
-  playerPosY-=playerWidth;
-  crouched = false;
+  if(crouched){
+    playerHeight += playerWidth;
+    playerPosY-=playerWidth;
+    crouched = false;
+  }
+  
 }
 function jump(){
   if(!crouched){        
@@ -1290,20 +1336,36 @@ function moveArrows(){
 <input type="text" id="direction">
 
 <div id='controller' class="joydiv-controller">
-      <div class="joydiv-up"></div>
-      <div id="lstick" class="joydiv-left"></div>
-      <div  id="rstick" class="joydiv-right"></div>
-      <div class="joydiv-down"></div>
-      <div class="joydiv-trackpad">
-      <div class="joydiv-tracker"></div>
-      </div>
+    <div class="joydiv-up"></div>
+    <div id="lstick" class="joydiv-left"></div>
+    <div  id="rstick" class="joydiv-right"></div>
+    <div class="joydiv-down"></div>
+    <div class="joydiv-trackpad">
+    <div class="joydiv-tracker"></div>
     </div>
-
+</div>
+<div id="buttons" class="buttons">
+  <div class="button1" id="shootBtn"></div>
+  <div class="button2" id="jumpBtn"></div>
+</div>
 
 </body>
 <style>
+.button1, .button2{
+  position: absolute;
+  width:50px;
+  height: 50px;
+  top: 400px;
+  left: 200px;
+  background-color: blue;
+}
+
+
 .joydiv-up,
 .joydiv-down {
+  top: 300%;
+  height: 0;
+  width: 0;
   visibility: hidden;
 }
 .joydiv-controller{
