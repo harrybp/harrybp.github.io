@@ -14,7 +14,7 @@
 <body>
   <script>
     var JoydivModule;
-(function (JoydivModule) {
+    (function (JoydivModule) {
     var Direction = (function () {
         function Direction(offset) {
             this.offset = {
@@ -105,8 +105,8 @@
             var onTrackerScreenPos = function (e, origin) {
                 var x = 2 * (e.screenX - origin.x) / _this.rootElement.clientWidth;
                 var y = 2 * (e.screenY - origin.y) / _this.rootElement.clientHeight;
-                _this.tracker.style.left = (x + 0.5) * 50 + "%";
-                _this.tracker.style.top = (y + 0.5) * 50 + "%";
+                _this.tracker.style.left = (x + 0.5) * 33 + "%";
+                _this.tracker.style.top = (y + 0.5) * 33 + "%";
                 return new Direction({
                     x: x,
                     y: -y
@@ -132,7 +132,7 @@
                         _this.addVote(onTrackerScreenPos(e, origin), 'tracker-mouse');
                     }
                 }, true);
-                document.addEventListener('mouseup', unmount, true);
+                _this.trackpad.addEventListener('mouseup', unmount, true);
             })();
             (function () {
                 var origin = null;
@@ -308,9 +308,9 @@
         return Joydiv;
     })();
     JoydivModule.Joydiv = Joydiv;    
-})(JoydivModule || (JoydivModule = {}));
+  })(JoydivModule || (JoydivModule = {}));
 
-  </script>
+</script>
 <script>
 /*
 * Game by Harry BP
@@ -669,10 +669,10 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     var right = document.getElementById("rstick");
     var left = document.getElementById("lstick");
     var shootBtn = document.getElementById("shootBtn");
-    var btnCss = "left:" + (gameSize - gameSize/4 - gameSize/16) + "px; width: " + gameSize/4 + "px; height:" + gameSize/4 + "px; border-radius: 50%;"
-    shootBtn.style.cssText += btnCss + "top:" + (window.innerHeight - gameSize/4 - gameSize/16) + "px;";
+    var btnCss = "left:" + (gameSize - gameSize/4 ) + "px; width: " + 3*gameSize/16 + "px; height:" + 3*gameSize/16 + "px; border-radius: 50%;"
+    shootBtn.style.cssText += btnCss + "top:" + (window.innerHeight - gameSize/4 ) + "px;";
     var jumpBtn = document.getElementById("jumpBtn");
-    jumpBtn.style.cssText += btnCss + "top:" + (gameSize + gameSize/16) + "px; background-color: red; left: " + (gameSize - gameSize/4 - gameSize/4) + "px;";
+    jumpBtn.style.cssText += btnCss + "top:" + (gameSize + gameSize/8) + "px; background-color: red; left: " + (gameSize - gameSize/4 - gameSize/4 + gameSize/16) + "px;";
     //console.log(height);
     jumpBtn.addEventListener("touchstart", function(e){
       jump();
@@ -1358,7 +1358,6 @@ function moveArrows(){
   background-color: blue;
 }
 
-
 .joydiv-up,
 .joydiv-down {
   top: 300%;
@@ -1401,6 +1400,7 @@ function moveArrows(){
   left: 25%;
   top: 25%;
   border-radius: 50%;
-  background-color: white;
+  background-color: gray;
+  opacity: 0.8;
 }
 </style>
