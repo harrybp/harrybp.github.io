@@ -9,8 +9,10 @@
     text-align: center;
   }
   </style>
+
 </head>
 <body>
+  <script type="text/javascript" src="joydiv.js"></script>
 <script>
 /*
 * Game by Harry BP
@@ -336,9 +338,9 @@ function init(size){
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
     console.log("mobile");
     isMobile = true;
-    while (document.body.firstChild) {
-     document.body.removeChild(document.body.firstChild);
-    }
+    //while (document.body.firstChild) {
+     //document.body.removeChild(document.body.firstChild);
+    //}
   } else {
     isMobile = false;
   }
@@ -361,52 +363,22 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   document.body.insertBefore(canvas, document.body.firstChild);
   if(isMobile){
     //Add mobile controls
-    var btnHeight = (window.innerHeight-gameSize)/2;
+    var height = window.innerHeight - gameSize;
+    var width = window.innerWidth/2;
     canvas.style.cssText += "margin: 0; border: 0px;outline: 2px solid white;";
     document.body.style.cssText += "margin: 0; border: 0px;";
-    var controlsCss = " display: table-cell;width:" + gameSize/3 + "px; height: "+btnHeight+"px; outline: 1px solid white;vertical-align: middle; font-size:500%; text-align: center;line-height: "+btnHeight/2+"px; font-family: Arial Black; color: white;";
-
-    //Create buttons
-    var left = document.createElement("div");
-    var right = document.createElement("div");
-    var up = document.createElement("div");
-    var down = document.createElement("div");
-    var shootBut = document.createElement("div");
-    var pauseBut = document.createElement("div");
-    var br = document.createElement("br");
-    left.textContent += "◀";
-    up.textContent += "▲";
-    right.textContent += "▶";
-    down.textContent += "▼";
-    pauseBut.textContent += "P";
-    shootBut.textContent += "S";
-    left.style.cssText += controlsCss;
-    right.style.cssText += controlsCss;
-    up.style.cssText += controlsCss;
-    down.style.cssText += controlsCss;
-    shootBut.style.cssText += controlsCss;
-    pauseBut.style.cssText += controlsCss;
-
-    //Add buttons to page
-    document.body.style.cssText+="line-height:0;"
-    document.body.appendChild(shootBut);
-    document.body.appendChild(up);
-    document.body.appendChild(pauseBut);
-    document.body.appendChild(br);
-    document.body.appendChild(left);
-    document.body.appendChild(down);
-    document.body.appendChild(right);
-
-    //Assign listners to buttons
-    up.addEventListener("touchstart", jump);
-    down.addEventListener("touchstart", crouch);
-    down.addEventListener("touchend", unCrouch);
-    left.addEventListener("touchstart", goLeft);
-    left.addEventListener("touchend", stopMoving);
-    right.addEventListener("touchstart", goRight);
-    right.addEventListener("touchend", stopMoving);
-    shootBut.addEventListener("touchstart", shoot);
-    pauseBut.addEventListener("touchstart", pauseIt);
+    var container = document.getElementById("controller");
+    var right = document.getElementById("rstick");
+    var left = document.getElementById("lstick");
+    //console.log(height);
+    container.style.cssText += "position: relative;height:" + width + "px;width:" + width + "px; font-size:" + width + "px;";
+    right.style.cssText += "border-width: "+width*0.75/2+"px 0px "+width*0.75/2+"px 50px;";
+    left.style.cssText += "border-width: "+width*0.75/2+"px 50px "+width*0.75/2+"px 0px;";
+    var element = document.getElementById('controller');
+    var joydiv = new JoydivModule.Joydiv({'element':element});
+    element.addEventListener('joydiv-changed',function(e){
+      document.getElementById('direction').value = joydiv.getOneOf8Directions().name;
+    });
   }
 
   //Reset variables
@@ -1017,8 +989,60 @@ function moveArrows(){
   }
 }
 </script>
-<h4>Controls</h4>
-<p><b>Left/Right Arrows:</b> Move<br><b>Up Arrow:</b> Jump/Double Jump<br><b>Down Arrow:</b> Duck<br><b>S:</b> Shoot<br><b>P:</b> Pause</p>
-<p id="info"></p>
+<input type="text" id="direction">
+
+<div id='controller' class="joydiv-controller">
+      <div class="joydiv-up"></div>
+      <div id="lstick" class="joydiv-left"></div>
+      <div  id="rstick" class="joydiv-right"></div>
+      <div class="joydiv-down"></div>
+      <div class="joydiv-trackpad">
+      <div class="joydiv-tracker"></div>
+      </div>
+    </div>
+
 
 </body>
+<style>
+.joydiv-up,
+.joydiv-down {
+  visibility: hidden;
+}
+.joydiv-controller{
+  width: 150px;
+  height: 150px;
+  background-color: transparent;
+}
+
+.joydiv-left {
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: transparent white transparent transparent;
+  top: 12.5%;
+  position: absolute;
+  width: 33%;
+  height: 75%;
+  background-color: transparent;
+}
+.joydiv-right {
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: transparent transparent transparent white;
+  position: absolute;
+  width: 33%;
+  height: 75%;
+  top: 12.5%;
+  left: 67%;
+  background-color: transparent;
+}
+
+.joydiv-tracker {
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  left: 40%;
+  top: 40%;
+  border-radius: 50%;
+  background-color: white;
+}
+</style>
