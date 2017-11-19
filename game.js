@@ -1051,6 +1051,7 @@ function addMobileControls(){
         crouch();
         goLeft();
         left.style.cssText += "border-color: transparent #adadad transparent transparent;";
+        right.style.cssText += "border-color: transparent transparent transparent #919191;";
         break;
       case "down":
         crouch();
@@ -1063,17 +1064,20 @@ function addMobileControls(){
         unCrouch();
         goLeft();
         left.style.cssText += "border-color: transparent #adadad transparent transparent;";
+        right.style.cssText += "border-color: transparent transparent transparent #919191;";
         break;
       case "down-right":
         crouch();
         goRight();
         right.style.cssText += "border-color: transparent transparent transparent #adadad;";
+        left.style.cssText += "border-color: transparent #919191 transparent transparent;";
         break;
       case "right":
       case "up-right":
         unCrouch();
         goRight();
         right.style.cssText += "border-color: transparent transparent transparent #adadad;";
+        left.style.cssText += "border-color: transparent #919191 transparent transparent;";
         break;
       default:
         stopMoving();
