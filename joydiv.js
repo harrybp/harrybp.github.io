@@ -90,6 +90,7 @@ var JoydivModule;
             var onTrackerScreenPos = function (e, origin) {
                 var x = 2 * (e.screenX - origin.x) / _this.rootElement.clientWidth;
                 var y = 2 * (e.screenY - origin.y) / _this.rootElement.clientHeight;
+                if(y < 0) y = 0;
                 _this.tracker.style.left = (x + 0.5) * 33 + "%";
                 _this.tracker.style.top = (y + 0.5) * 33 + "%";
                 return new Direction({

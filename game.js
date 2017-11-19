@@ -6,7 +6,8 @@ function draw(){
   if(paused)
     return;
   //Clear canvas
-  ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  ctx.fillStyle = "#b3c6af";
+  ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
   //Draw player
   //Bow if facing left
@@ -131,6 +132,10 @@ function draw(){
       } else {
         var height = tiles[x].height;
       }
+      if(gameSize % 128 != 0){
+        width += 1;
+        height += 1;
+      }
       ctx.fillRect(tiles[x].left,tiles[x].top,width,height);
     }
   }
@@ -192,7 +197,7 @@ function calculateSize(x){
   gravity = gameSize/128;
   jumpSpeed = gameSize/16;
   creatureJumpSpeed = gameSize/24;
-  gridDimension = parseInt(gameSize/gridSize);
+  gridDimension = gameSize/gridSize;
   playerPosX = gameSize/2;
   playerPosY = gameSize/2;
   playerSpeed = gameSize/64;
@@ -221,6 +226,8 @@ var creatureSpawns;
 var distCount;
 var chunksGenerated;
 var lastRadius;
+var isMobile;
+var canvas;
 //--------------------------------------------------------------------------
 //Object constructors
 function tileObj(left, top, height, isArrow, direction, isCreature, id, color){
@@ -309,13 +316,30 @@ function updateFrame(){
   if(end > maxLen){
     maxLen = end;
   }
-  document.getElementById("info").textContent = end.toFixed(2) + " : " + maxLen.toFixed(2);
+  if(!isMobile){
+    document.getElementById("info").textContent = end.toFixed(2) + " : " + maxLen.toFixed(2);
+  }
+  
 }
 
 //--------------------------------------------------------------------------
 //Initialise game state, create all elements
 function init(size){
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    console.log("mobile");
+    isMobile = true;
+    while (document.body.firstChild) {
+     document.body.removeChild(document.body.firstChild);
+    }
+    canvas = null;
+  } else {
+    isMobile = false;
+  }
   paused = true;
+  if(isMobile){
+    size = window.innerWidth - 50;
+  }
+
   calculateSize(size);
   // Create the canvas
   if(canvas != null){
@@ -328,6 +352,9 @@ function init(size){
   canvas.height = gameSize;
   canvas.style.cssText += "display:block; border: 2px solid white; margin: auto; width: " + gameSize + "px; height: " + gameSize + "px;";
   document.body.insertBefore(canvas, document.body.firstChild);
+  if(isMobile){
+    addMobileControls();
+  }
 
   //Reset variables
   gravSpeed = score = damageTime = maxCol = jumpCount = xSpeed = xPosition = xPositionOffset = yPosition = yPositionOffset = col = maxLen = rowNo = arrowCount = creatureCount = activeCreatureCount =tileCount = distCount = chunksGenerated = lastRadius = 0;
@@ -418,8 +445,8 @@ function genMap(start, type){
     }
     if(isCreature == 1 && (start == 0 || circleXCenterCurrent > 25)){
       console.log("c");
-      newChunk[circleYCenter+radius][circleXCenterCurrent] = 5;
-      
+      newChunk[circleYCenter+radius][circleXCenterCurrent] = creatureSpawns + 5;
+      creatureSpawns++;
     }
     if(circleXCenterCurrent == length-2)
       lastRadius = radius;
@@ -625,42 +652,18 @@ function yAccelerate(){
 window.onkeydown = function(e) {
     var key = e.keyCode ? e.keyCode : e.which;
     if(key == 38){
-      if(!crouched){
-        
-        if(jumpCount < 2){
-          if(jumpCount < 1){//Jump
-            gravSpeed = -jumpSpeed;
-          } else {//Double jump
-            gravSpeed = -jumpSpeed+2;
-          }
-          jumpCount ++;
-        }
-      } 
+      jump();
     }
     if (key == 39) {
-      xSpeed = -playerSpeed; //-->Right
-      faceDirection = 1;
+      goRight();
     }else if (key == 37) {
-      xSpeed = playerSpeed; //<--Left
-      faceDirection = -1;
+      goLeft();
     }
     if(key == 40 && !crouched){//Down\/
-      playerHeight -= playerWidth;
-      playerPosY+=playerWidth;
-      crouched = true;
+      crouch();
     }
     if(key == 80){//(P)ause
-      console.log(rowNo);
-      if(!dead){
-        paused = !paused;
-        if(paused){
-          ctx.fillStyle = "white";
-          ctx.fillRect(3*gridDimension, 3*gridDimension, 3*gridDimension, 10*gridDimension);
-          ctx.fillRect(10*gridDimension, 3*gridDimension, 3*gridDimension, 10*gridDimension);
-        }
-      } else {
-        init(gameSize);
-      }
+      pauseIt();
     }
   }
 
@@ -669,16 +672,68 @@ window.onkeydown = function(e) {
 window.onkeyup = function(e) {
   var key = e.keyCode ? e.keyCode : e.which;
   if(key == 39 || key == 37){//Left & Right release
-    xSpeed = 0;
+    stopMoving();
   }
   if(key == 40){//Down release
-    playerHeight += playerWidth;
-    playerPosY-=playerWidth;
-    crouched = false;
+    unCrouch();
   }
   if(key == 83){//(S)hoot
       shoot();
     }
+}
+
+//--------------------------------------------------------------------------
+//Controls for mobile devices
+function goLeft(){
+  xSpeed = playerSpeed; //<--Left
+  faceDirection = -1;
+}
+function stopMoving(){
+  xSpeed = 0;
+}
+function goRight(){
+  xSpeed = -playerSpeed; //-->Right
+  faceDirection = 1;
+}
+function crouch(){
+  if(!crouched){
+    playerHeight -= playerWidth;
+    playerPosY+=playerWidth;
+    crouched = true;
+
+  }
+}
+function unCrouch(){
+  if(crouched){
+    playerHeight += playerWidth;
+    playerPosY-=playerWidth;
+    crouched = false;
+  }
+  
+}
+function jump(){
+  if(!crouched){        
+    if(jumpCount < 2){
+      if(jumpCount < 1){//Jump
+        gravSpeed = -jumpSpeed;
+      } else {//Double jump
+        gravSpeed = -jumpSpeed+2;
+      }
+      jumpCount ++;
+    }
+  } 
+}
+function pauseIt(){
+  if(!dead){
+    paused = !paused;
+    if(paused){
+      ctx.fillStyle = "white";
+      ctx.fillRect(3*gridDimension, 3*gridDimension, 3*gridDimension, 10*gridDimension);
+      ctx.fillRect(10*gridDimension, 3*gridDimension, 3*gridDimension, 10*gridDimension);
+    }
+  } else {
+    init(gameSize);
+  }
 }
 
 //--------------------------------------------------------------------------
@@ -737,11 +792,10 @@ function renderCreatures(start){
       if(map[j][i] >= 5){
         var xOffset = ((i*gridDimension)-xPosition);
         var yOffset = (((j-1)*gridDimension)-yPosition);
-        tiles[tileCount] = new tileObj(xOffset, yOffset, 2*gridDimension, false, 0, true, creatureSpawns, "#000000");
+        tiles[tileCount] = new tileObj(xOffset, yOffset, 2*gridDimension, false, 0, true, map[j][i], "#000000");
         tileCount++;
-        creatures[creatureSpawns]= new creature(0, creatureHealth, true, -1);
+        creatures[map[j][i]]= new creature(0, creatureHealth, true, -1);
         creatureCount++;
-        creatureSpawns++;
       }
     }
   }
@@ -914,4 +968,118 @@ function moveArrows(){
       tileCount--;
     } 
   }
+}
+
+function addMobileControls(){
+  //Add mobile controls
+  var width = window.innerWidth/2;
+
+  canvas.style.cssText += "margin: 0; border: 0px;outline: 2px solid white; margin: 25px;";
+  document.body.style.cssText += "margin: 0; border: 0px; background-color: gray;";
+
+  //Add buttons
+  var shootBtn = document.createElement("div");
+  var jumpBtn = document.createElement("div");
+  var btnCss = "left:" + (window.innerWidth - gameSize/4 - gameSize/16) + "px; width: " + 3*gameSize/16 + "px; height:" + 3*gameSize/16 + "px; border-radius: 50%; position: absolute; border: 2px solid white;";
+  shootBtn.style.cssText += btnCss + "top:" + (window.innerHeight - gameSize/8 - 3*gameSize/16 ) + "px; background-color: blue;";
+  jumpBtn.style.cssText += btnCss + "top:" + (window.innerHeight - gameSize/8 - 3*gameSize/16- gameSize/4) + "px; background-color: red; left: " + (window.innerWidth - gameSize/2 ) + "px;";
+  jumpBtn.addEventListener("touchstart", 
+    function(e){   
+      jump(); 
+      jumpBtn.style.cssText += "background-color: #910000;";  
+    });
+  jumpBtn.addEventListener("touchend", 
+    function(e){
+      jumpBtn.style.cssText += "background-color: red;";  
+    });
+  shootBtn.addEventListener("touchstart", 
+    function(e){  
+      shoot();  
+      shootBtn.style.cssText += "background-color: #011d8e;";
+    });
+  shootBtn.addEventListener("touchend", 
+    function(e){
+      shootBtn.style.cssText += "background-color: blue;";
+    });
+  document.body.appendChild(shootBtn);
+  document.body.appendChild(jumpBtn);
+
+  //Add joystick
+  //Tracker
+  var tracker = document.createElement("div");
+  tracker.style.cssText += "position: absolute; width: 50%; height: 50%; left: 25%; top: 25%; border-radius: 50%; background-color: black; opacity: 0.5; border: 2px solid white;";
+  var trackpad = document.createElement("div");
+  tracker.classList.add("joydiv-tracker");
+  trackpad.classList.add("joydiv-trackpad");
+
+  //Right and left sticks
+  var right = document.createElement("div");
+  var left = document.createElement("div");
+  var rLCSS = "box-sizing: border-box; border-style: solid; top: 12.5%; position: absolute; width: 33%; height: 75%; background-color: transparent;";
+  right.style.cssText += rLCSS + "border-width: "+width*0.75/2+"px 0px "+width*0.75/2+"px 50px; border-color: transparent transparent transparent #919191; left: 67%;";
+  left.style.cssText += rLCSS + "border-width: "+width*0.75/2+"px 50px "+width*0.75/2+"px 0px; border-color: transparent #919191 transparent transparent;";
+  left.classList.add("joydiv-left");
+  right.classList.add("joydiv-right");
+
+  //Up and down sticks
+  var up = document.createElement("div");
+  var down = document.createElement("div");
+  var uDCSS = "top: 300%; height: 0; width: 0; visibility: hidden;";
+  up.style.cssText += uDCSS;
+  down.style.cssText += uDCSS;
+  down.classList.add("joydiv-down");
+  up.classList.add("joydiv-up");
+  
+  //Container
+  var container = document.createElement("div");
+  container.style.cssText += "position: absolute; height:" + width + "px;width:" + width + "px; font-size:" + width + "px; background-color: transparent;top: "+(window.innerHeight - width - gameSize/16)+"px;";
+  container.classList.add("joydiv-controller");
+  container.appendChild(up);
+  container.appendChild(left);
+  container.appendChild(right);
+  container.appendChild(down);
+  trackpad.appendChild(tracker);
+  container.appendChild(trackpad);
+  document.body.appendChild(container);
+  
+  //Add listners
+  var joydiv = new JoydivModule.Joydiv({'element':container});
+  container.addEventListener('joydiv-changed',function(e){
+    var value = joydiv.getOneOf8Directions().name;
+    switch(value){
+      case "down-left":
+        crouch();
+        goLeft();
+        left.style.cssText += "border-color: transparent #adadad transparent transparent;";
+        break;
+      case "down":
+        crouch();
+        stopMoving();
+        left.style.cssText += "border-color: transparent #919191 transparent transparent;";
+        right.style.cssText += "border-color: transparent transparent transparent #919191;";
+        break;
+      case "left":
+      case "up-left":
+        unCrouch();
+        goLeft();
+        left.style.cssText += "border-color: transparent #adadad transparent transparent;";
+        break;
+      case "down-right":
+        crouch();
+        goRight();
+        right.style.cssText += "border-color: transparent transparent transparent #adadad;";
+        break;
+      case "right":
+      case "up-right":
+        unCrouch();
+        goRight();
+        right.style.cssText += "border-color: transparent transparent transparent #adadad;";
+        break;
+      default:
+        stopMoving();
+        unCrouch();
+        left.style.cssText += "border-color: transparent #919191 transparent transparent;";
+        right.style.cssText += "border-color: transparent transparent transparent #919191;";
+    }
+  });
 }
