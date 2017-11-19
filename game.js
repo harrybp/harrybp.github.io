@@ -339,7 +339,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   if(isMobile){
     size = window.innerWidth - 50;
   }
-
+  map  = null;
   calculateSize(size);
   // Create the canvas
   if(canvas != null){
@@ -522,11 +522,18 @@ function die(){
   paused = true;
   ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   //Write score
-  ctx.font= ((10/32)*gameSize) +"px Arial Black";
-  console.log((10/32)*gameSize);
+  ctx.font= ((8/32)*gameSize) +"px Arial Black";
+  //console.log((10/32)*gameSize);
   ctx.fillStyle = "white";
   ctx.fillText("Game over", gridDimension*2, 5*gridDimension, 12*gridDimension);
-  ctx.fillText("Score: " + score, gridDimension*2, 12*gridDimension, 12*gridDimension);
+  ctx.fillText("Score: " + score, gridDimension*2, 10*gridDimension, 12*gridDimension);
+  if(isMobile){
+    var text = "Tap to restart";
+  } else {
+    var text = "Press P to restart";
+  }
+  ctx.font= ((10/64)*gameSize) +"px Arial Black";
+  ctx.fillText(text, gridDimension*2, 14*gridDimension, 12*gridDimension);
 }
 
 //--------------------------------------------------------------------------
@@ -976,6 +983,7 @@ function addMobileControls(){
 
   canvas.style.cssText += "margin: 0; border: 0px;outline: 2px solid white; margin: 25px;";
   document.body.style.cssText += "margin: 0; border: 0px; background-color: gray;";
+  canvas.addEventListener("touchstart", function(e){pauseIt();});
 
   //Add buttons
   var shootBtn = document.createElement("div");
