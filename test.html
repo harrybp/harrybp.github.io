@@ -20,7 +20,42 @@
 /*
 * Game by Harry BP
 */
-map = null;
+map = null/*[[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,],
+[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,],
+[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,],
+[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
+[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
+[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
+[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
+[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
+[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,],
+[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,],
+[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,],
+[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,],
+[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,],
+[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,],
+[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
+[1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,1,1,1,0,0,1,1,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
+]*/;
+
+
+
+
+
 function draw(){
   if(paused)
     return;
@@ -338,6 +373,7 @@ function updateFrame(){
   if(!isMobile){
     document.getElementById("info").textContent = end.toFixed(2) + " : " + maxLen.toFixed(2);
   }
+  ctx.fillText(end.toFixed(2) + " : " + maxLen.toFixed(2), 8*gridDimension, 2*gridDimension, 6*gridDimension);
   
 }
 
@@ -530,7 +566,7 @@ function loseHealth(amount){
   damageTime = time;
   health -= amount;
   if(health < 1){
-    die();
+    //die();
   } 
 }
 
@@ -545,7 +581,14 @@ function die(){
   console.log((10/32)*gameSize);
   ctx.fillStyle = "white";
   ctx.fillText("Game over", gridDimension*2, 5*gridDimension, 12*gridDimension);
-  ctx.fillText("Score: " + score, gridDimension*2, 12*gridDimension, 12*gridDimension);
+  ctx.fillText("Score: " + score, gridDimension*2, 10*gridDimension, 12*gridDimension);
+  if(isMobile){
+    var text = "Tap to restart";
+  } else {
+    var text = "Press P to restart";
+  }
+  ctx.font= ((10/64)*gameSize) +"px Arial Black";
+  ctx.fillText(text, gridDimension*2, 14*gridDimension, 12*gridDimension);
 }
 
 //--------------------------------------------------------------------------
@@ -992,7 +1035,7 @@ function moveArrows(){
 function addMobileControls(){
   //Add mobile controls
   var width = window.innerWidth/2;
-
+  canvas.addEventListener("touchstart", function(e){pauseIt();});
   canvas.style.cssText += "margin: 0; border: 0px;outline: 2px solid white; margin: 25px;";
   document.body.style.cssText += "margin: 0; border: 0px; background-color: gray;";
 
@@ -1002,8 +1045,24 @@ function addMobileControls(){
   var btnCss = "left:" + (window.innerWidth - gameSize/4 - gameSize/16) + "px; width: " + 3*gameSize/16 + "px; height:" + 3*gameSize/16 + "px; border-radius: 50%; position: absolute; border: 2px solid white;";
   shootBtn.style.cssText += btnCss + "top:" + (window.innerHeight - gameSize/8 - 3*gameSize/16 ) + "px; background-color: blue;";
   jumpBtn.style.cssText += btnCss + "top:" + (window.innerHeight - gameSize/8 - 3*gameSize/16- gameSize/4) + "px; background-color: red; left: " + (window.innerWidth - gameSize/2 ) + "px;";
-  jumpBtn.addEventListener("touchstart", function(e){   jump();   });
-  shootBtn.addEventListener("touchstart", function(e){  shoot();  });
+  jumpBtn.addEventListener("touchstart", 
+    function(e){   
+      jump(); 
+      jumpBtn.style.cssText += "background-color: #910000;";  
+    });
+  jumpBtn.addEventListener("touchend", 
+    function(e){
+      jumpBtn.style.cssText += "background-color: red;";  
+    });
+  shootBtn.addEventListener("touchstart", 
+    function(e){  
+      shoot();  
+      shootBtn.style.cssText += "background-color: #011d8e;";
+    });
+  shootBtn.addEventListener("touchend", 
+    function(e){
+      shootBtn.style.cssText += "background-color: blue;";
+    });
   document.body.appendChild(shootBtn);
   document.body.appendChild(jumpBtn);
 
@@ -1053,28 +1112,36 @@ function addMobileControls(){
       case "down-left":
         crouch();
         goLeft();
+        left.style.cssText += "border-color: transparent #adadad transparent transparent;";
         break;
       case "down":
         crouch();
         stopMoving();
+        left.style.cssText += "border-color: transparent #919191 transparent transparent;";
+        right.style.cssText += "border-color: transparent transparent transparent #919191;";
         break;
       case "left":
       case "up-left":
         unCrouch();
         goLeft();
+        left.style.cssText += "border-color: transparent #adadad transparent transparent;";
         break;
       case "down-right":
         crouch();
         goRight();
+        right.style.cssText += "border-color: transparent transparent transparent #adadad;";
         break;
       case "right":
       case "up-right":
         unCrouch();
         goRight();
+        right.style.cssText += "border-color: transparent transparent transparent #adadad;";
         break;
       default:
         stopMoving();
         unCrouch();
+        left.style.cssText += "border-color: transparent #919191 transparent transparent;";
+        right.style.cssText += "border-color: transparent transparent transparent #919191;";
     }
   });
 }
