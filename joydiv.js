@@ -109,8 +109,8 @@ var JoydivModule;
                 }, false);
                 var unmount = function () {
                     origin = null;
-                    _this.tracker.style.left = "50%";
-                    _this.tracker.style.top = "50%";
+                    _this.tracker.style.left = "25%";
+                    _this.tracker.style.top = "25%";
                     _this.removeVote('tracker-mouse');
                 };
                 document.addEventListener('mousemove', function (e) {
