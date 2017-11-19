@@ -520,7 +520,8 @@ function loseHealth(amount){
 function die(){
   dead = true;
   paused = true;
-  ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  ctx.fillStyle = "#b3c6af";
+  ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   //Write score
   ctx.font= ((8/32)*gameSize) +"px Arial Black";
   //console.log((10/32)*gameSize);
