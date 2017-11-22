@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
@@ -20,43 +21,38 @@
 /*
 * Game by Harry BP
 */
-map = null/*[[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,],
-[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,],
-[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,],
-[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
-[1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
-[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
-[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
-[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
-[1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,],
-[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,],
-[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,],
-[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,],
-[1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,],
-[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,],
-[1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,],
-[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,],
-[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,],
-[1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,1,1,1,0,0,1,1,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,],
-]*/;
-
-
-
-
-
+map = null;/*[
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,5,0,0,0,5,0,0,5,0,0,5,0,0,0,5,0,0,0,5,0,0,0,5,0,0,0,5,0,0,5,0,0,0,0],
+  [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+*/
 function draw(){
+  
   if(paused)
     return;
   //Clear canvas
@@ -166,8 +162,29 @@ function draw(){
       ctx.fill();
     }
   }
+
+  //Lava
+  var pos = (col)%50;
+  lavaX = 0;
+  if(pos >= 50-(gridSize)){
+    if((chunks[chunkNo] == 1 || chunks[chunkNo] == 3) && chunks[chunkNo + 1]==2){
+      lavaX = ((50 - pos) * gridDimension) - xPositionOffset;
+      lavaWidth = gameSize;
+    } else if(chunks[chunkNo] == 2 && (chunks[chunkNo+1] == 1 || chunks[chunkNo+1] == 3)){
+      lavaX = 0;
+      lavaWidth = ((50 - pos) * gridDimension) - xPositionOffset;
+    }
+    
+  }else {
+    if(chunks[chunkNo] == 2){
+      lavaWidth = gameSize;
+    } else {
+      lavaWidth = 0;
+    }
+  }
   ctx.fillStyle = "#ff670f";
-  ctx.fillRect(0, gameSize-(yPosition) + (7*gridDimension) + gridDimension/4 , gameSize, gameSize);
+  ctx.fillRect(lavaX, gameSize-(yPosition) + (7*gridDimension) + gridDimension/4 , lavaWidth, gameSize);
+
   for(x = 0; x < tileCount; x++){
     if(tiles[x].left + gridDimension < 0 || tiles[x].left > gameSize || tiles[x].top + gridDimension < 0 || tiles[x].top > gameSize)
       continue;
@@ -211,9 +228,7 @@ function draw(){
   //Write score
   ctx.font= ((10/128)*gameSize) +"px Arial Black";
   ctx.fillStyle = "white";
-  ctx.fillText(score, gridDimension, 2*gridDimension, 2*gridDimension);
-
-  
+  ctx.fillText(score, gridDimension, 2*gridDimension, 2*gridDimension);  
 }
 
 //--------------------------------------------------------------------------
@@ -229,9 +244,9 @@ var gameSize, gridDimension;
 var jumpSpeed, playerPosX, playerPosY, playerSpeed, startX, startY, playerWidth, playerHeight;
 
 //Other
-var xDeleteDist = 2;
+var xDeleteDist = 4;
 var yDeleteDist = 6;
-var renderDist = 5;
+var renderDist = 4;
 var frameLength = 30;
 var damageTimeout = 25;
 var arrowSpeed, arrowHeight, gravity, ctx, canvas;
@@ -282,6 +297,9 @@ var chunksGenerated;
 var lastRadius;
 var isMobile;
 var canvas;
+var chunks;
+var chunkNo;
+var nextType;
 //--------------------------------------------------------------------------
 //Object constructors
 function tileObj(left, top, height, isArrow, direction, isCreature, id, color){
@@ -347,8 +365,13 @@ function updateFrame(){
 
   //Generate new chunks
   if(maxCol%50 == 20 && maxCol != distCount){
-    var type = Math.floor(Math.random() * 2)+1;
+    var type = Math.floor(Math.random() * 3)+1;
     console.log(type);
+    //type = 3;
+    if(chunks[chunkNo] == 3){
+      type = nextType;
+    }
+    //type = 3;
     genMap(0,type);
     chunksGenerated++;
     renderCreatures(50*chunksGenerated);
@@ -364,16 +387,18 @@ function updateFrame(){
       die();
     }
   }
+  chunkNo = Math.floor((col)/50);
   draw();
   //Stats
   var end = (performance.now() - start);
   if(end > maxLen){
     maxLen = end;
   }
+  
   if(!isMobile){
-    document.getElementById("info").textContent = end.toFixed(2) + " : " + maxLen.toFixed(2);
+    document.getElementById("info").textContent = end.toFixed(2) + " : " + maxLen.toFixed(2) + " : Chunk: " + chunkNo + "(" + chunks[chunkNo] + ")";
   }
-  ctx.fillText(end.toFixed(2) + " : " + maxLen.toFixed(2), 8*gridDimension, 2*gridDimension, 6*gridDimension);
+  //ctx.fillText(end.toFixed(2) + " : " + maxLen.toFixed(2), 8*gridDimension, 2*gridDimension, 6*gridDimension);
   
 }
 
@@ -418,6 +443,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   faceDirection = 1;
   creatures = [];
   tiles = [];
+  chunks = [];
   health = 100;
   dead = false;
 
@@ -432,6 +458,8 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   //Generate map and load tiles
   circleYCenter = 16;
   creatureSpawns = 0;
+  chunkNo = -1;
+  map = null;
   genMap(14,1);
   renderCreatures(0); 
   for(x = -1; x < gridSize + 1; x++){
@@ -444,11 +472,15 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
 //Randomly generate map
 function genMap(start, type){
   //type = 2;
+  chunks[chunkNo+1] = type;
   var length = 50;
   var height = 30;
   var leeway = 7;
+  var block = type;
   if(type == 1){
     leeway = 8;
+  } else if(type == 3){
+    block = 0;
   }
   var minRadius = 3;
 
@@ -459,54 +491,144 @@ function genMap(start, type){
   }
   for(i = 0; i < height; i++){
     for(j = 0; j < length; j++){
-      newChunk[i][j] = type;
+      newChunk[i][j] = block;
     }
   }
 
   //Generate
-  for(circleXCenterCurrent = start; circleXCenterCurrent < length; circleXCenterCurrent+= 2){
-    if(circleYCenter < minRadius + leeway){
-      change = 3;
-    } else if(circleYCenter > (height-minRadius-leeway)){
-      change = -3;
-    } else {
-      var change = 2 - Math.floor(Math.random() * (3 - 1 + 1) + 1);
-    }
-    
-    //console.log(change);
-    circleYCenter += change;
-    if(circleYCenter < minRadius + leeway){
-      circleYCenter = minRadius + leeway;
-    } else if(circleYCenter > (height-minRadius-leeway)){
-      circleYCenter = (height-minRadius-leeway);
-    }
-    var cTop = circleYCenter - leeway;
-    var cBottom = height - leeway - circleYCenter;
-    var maxRadius = Math.min(cTop, cBottom);
-    var isCreature = Math.floor(Math.random() * (creatureAbudance - 1 + 1) + 1);
-    if(circleXCenterCurrent == 0){
-      radius = lastRadius;
-    } else {
-      var radius = Math.floor(Math.random() * (maxRadius - minRadius + 1) + minRadius);
-    }
-    //console.log(circleYCenter);
-    for(i = 0; i < height; i++){
-      for(j = 0; j < length; j++){
-        var  x = Math.sqrt(Math.pow(Math.abs(circleYCenter-i),2) + Math.pow(Math.abs(circleXCenterCurrent-j),2));
-        if(x< radius){
-          newChunk[i][j] = 0;
+  if(type == 1 || type == 2){
+    for(circleXCenterCurrent = start; circleXCenterCurrent < length; circleXCenterCurrent+= 2){
+      if(circleYCenter < minRadius + leeway){
+        change = 3;
+      } else if(circleYCenter > (height-minRadius-leeway)){
+        change = -3;
+      } else {
+        var change = 2 - Math.floor(Math.random() * (3 - 1 + 1) + 1);
+      }
+      
+      //console.log(change);
+      circleYCenter += change;
+      if(circleYCenter < minRadius + leeway){
+        circleYCenter = minRadius + leeway;
+      } else if(circleYCenter > (height-minRadius-leeway)){
+        circleYCenter = (height-minRadius-leeway);
+      }
+      var cTop = circleYCenter - leeway;
+      var cBottom = height - leeway - circleYCenter;
+      var maxRadius = Math.min(cTop, cBottom);
+      var isCreature = Math.floor(Math.random() * (creatureAbudance - 1 + 1) + 1);
+      if(circleXCenterCurrent == 0){
+        radius = lastRadius;
+      } else {
+        var radius = Math.floor(Math.random() * (maxRadius - minRadius + 1) + minRadius);
+        if(circleXCenterCurrent < 5)
+          if(radius > lastRadius +2)
+            radius=lastRadius;
+      }
+      //console.log(circleYCenter);
+      for(i = 0; i < height; i++){
+        for(j = 0; j < length; j++){
+          var  x = Math.sqrt(Math.pow(Math.abs(circleYCenter-i),2) + Math.pow(Math.abs(circleXCenterCurrent-j),2));
+          if(x< radius){
+            newChunk[i][j] = 0;
+          }
         }
       }
+      if(isCreature == 1 && (start == 0 || circleXCenterCurrent > 25)){
+        console.log("c");
+        newChunk[circleYCenter+radius][circleXCenterCurrent] = creatureSpawns + 5;
+        creatureSpawns++;
+      }
+      if(circleXCenterCurrent == length-2)
+        lastRadius = radius;
     }
-    if(isCreature == 1 && (start == 0 || circleXCenterCurrent > 25)){
-      console.log("c");
-      newChunk[circleYCenter+radius][circleXCenterCurrent] = creatureSpawns + 5;
-      creatureSpawns++;
-    }
-    if(circleXCenterCurrent == length-2)
-      lastRadius = radius;
   }
-  
+
+  if(type == 3){
+    var platNow = false;
+    var platformY = circleYCenter + 5;
+    var noPlatCount = 0;
+    var platCount = 0;
+    for(x = 0; x < length; x++){
+      if(!platNow){
+        noPlatCount++;
+        platCount = 0;
+        var platStart = (Math.floor(Math.random()*3) == 0)
+        if(platStart || noPlatCount > 4){
+          var yChange = Math.floor((Math.random()*6) -3);
+          //console.log(yChange);
+          platformY += yChange;
+          if(platformY > height-leeway){
+            platformY = height-leeway;
+          } else if(platformY < leeway+7){
+            platformY = leeway+7;
+          }
+          platNow = true;
+        }
+      } else {
+        noPlatCount = 0;
+        platCount++;
+        if(platCount == 1 && x < 48){
+          for(y = platformY; y < height; y++){
+            newChunk[y][x] = 4;
+          }
+        }
+        var platEnd = (Math.floor(Math.random()*3) == 0)
+        if(x == 47)
+          platEnd = true;
+
+        if(platEnd && platCount > 2){
+          platNow = false;
+          for(y = platformY+1; y < height; y++){
+            newChunk[y][x-2] = 4;
+          }
+        }
+      }
+      
+
+      if(platNow && x < 48){
+        //console.log("plat");
+        newChunk[platformY][x] = 3;
+      }
+    }
+    var hCount = circleYCenter + lastRadius + 2;
+    var hCount2 = circleYCenter - lastRadius -2;
+    console.log("g"+hCount);
+    block = 1;
+    if(chunks[chunkNo] == 2){
+      block = 2;
+    }
+    for(x = 0; hCount < height && hCount2 > 0; x++, hCount+=2, hCount2 -=2){
+      for(y = hCount; y < height; y++){
+        newChunk[y][x] = block;
+      }
+      for(y = hCount2; y > 0; y--){
+        newChunk[y][x] = block;
+      }
+    }
+    nextType = Math.floor(Math.random() * 3)+1;
+    var block = 1;
+    if(nextType == 2){
+      block = 2;
+    }
+    circleYCenter = platformY -3;
+    var hCount = circleYCenter + 4;
+    var hCount2 = circleYCenter - 4;
+    console.log("g"+hCount);
+    for(x = length - 1; hCount < height || hCount2 > 0; x--, hCount+=2, hCount2 -=2){
+      for(y = hCount; y < height; y++){
+        newChunk[y][x] = block;
+      }
+      for(y = hCount2; y > 0; y--){
+        newChunk[y][x] = block;
+      }
+    }
+    console.log("LRLRL");
+    lastRadius = 3;
+  }
+
+
+
   //Generate craters
   if(type == 2){
     var lastCrater = -5;
@@ -566,7 +688,7 @@ function loseHealth(amount){
   damageTime = time;
   health -= amount;
   if(health < 1){
-    //die();
+    die();
   } 
 }
 
@@ -596,23 +718,25 @@ function die(){
 function loadTiles(){
   col = Math.floor(xPosition/gridDimension);
   rowNo = Math.floor(yPosition/gridDimension);
-  while(xPositionOffset > gridDimension){
+  while(xPositionOffset >= gridDimension){
     xPositionOffset-=gridDimension;
     loadCol(col+gridSize, gameSize-xPositionOffset);
   }
-  while(xPositionOffset < -gridDimension){
+  while(xPositionOffset < 0){
+    console.log("l");
     xPositionOffset+=gridDimension;
     loadCol(col-1, -gridDimension - (xPositionOffset%gridDimension));
   }
-  while(yPositionOffset > gridDimension){
-      var test = Math.floor(yPositionOffset/gridDimension)-1;
+  while(yPositionOffset >= gridDimension){
+      //var test = Math.floor(yPositionOffset/gridDimension)-1;
       yPositionOffset-=gridDimension;
-      loadRow(rowNo+gridSize-test, gameSize-yPositionOffset);
+      loadRow(rowNo+gridSize, gameSize-yPositionOffset);
     }
-  while(yPositionOffset < -gridDimension){
-    var test = Math.floor(-yPositionOffset/gridDimension)-1;
+  while(yPositionOffset < 0){
+    //var test = Math.floor(-yPositionOffset/gridDimension)-1;
+    //console.log(test);
     yPositionOffset+=gridDimension;
-    loadRow(rowNo-test, -gridDimension-(yPositionOffset%gridDimension));
+    loadRow(rowNo-1, -gridDimension-(yPositionOffset%gridDimension));
   }
 }
 
@@ -633,6 +757,7 @@ function panMap(){
         } else {
           newPLeft = playerPosX - gridDimension;
         }
+
       } 
 
       //Get minimum move amount
@@ -672,6 +797,8 @@ function yAccelerate(){
 
   //Check each tile
   for(i = 0; i < tileCount; i++){
+    if(tiles[i].isCreature)
+      continue;
     var pLeft = tiles[i].left;
     var pTopOriginal = tiles[i].top;
     var newPTop = pTopOriginal - gravSpeed;
@@ -683,6 +810,7 @@ function yAccelerate(){
         } else if(gravSpeed < 0){//Player jumping
           var newPTop = playerPosY - tiles[i].height;
         }
+
       }
       //Find minimum move amount possible
       if(moveAmount== null || (gravSpeed > 0 && newPTop - pTopOriginal > moveAmount) || (gravSpeed < 0 && newPTop - pTopOriginal < moveAmount) ){
@@ -816,6 +944,20 @@ function createTile(width, height, xOffset, yOffset, type){
     } else if(rand == 1){
       bgColor = "#701f1f";
     }  
+  } else if(type ==3){
+    var bgColor = "#966942";
+    if(rand == 0){
+      bgColor = "#a06e43";
+    } else if(rand == 1){
+      bgColor = "#8e613a";
+    }  
+  } else if(type ==4){
+    var bgColor = "#44403c";
+    /*if(rand == 0){
+      bgColor = "#a06e43";
+    } else if(rand == 1){
+      bgColor = "#8e613a";
+    }  */
   }
   tiles[tileCount] = new tileObj(xOffset, yOffset, height, false, 0, false, 0, bgColor);
   tileCount++;
@@ -854,9 +996,9 @@ function renderCreatures(start){
       if(map[j][i] >= 5){
         var xOffset = ((i*gridDimension)-xPosition);
         var yOffset = (((j-1)*gridDimension)-yPosition);
-        tiles[tileCount] = new tileObj(xOffset, yOffset, 2*gridDimension, false, 0, true, map[j][i], "#000000");
+        tiles[tileCount] = new tileObj(xOffset, yOffset, 2*gridDimension, false, 0, true, creatureCount, "#000000");
         tileCount++;
-        creatures[map[j][i]]= new creature(0, creatureHealth, true, -1);
+        creatures[creatureCount]= new creature(0, creatureHealth, true, -1);
         creatureCount++;
       }
     }
