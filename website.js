@@ -21,20 +21,22 @@ var website = {
           {
             type: 'columns',
             text1: 'email',
-            text2: 'harrytbp@gmail.com',
+            text2: ' - harrytbp@gmail.com',
             seperate: false
           },
           {
             type: 'columns',
             text1: 'linkedin',
-            text2: '<a href="https://www.linkedin.com/in/harry-bond-preston-58399311a/">harry-bond-preston</a>',
+            text2: ' -<a href="https://www.linkedin.com/in/harry-bond-preston-58399311a/">harry-bond-preston</a>',
             seperate: false
           },
           {
             type: 'columns',
             text1: 'github',
-            text2: '<a href="https://github.com/harrybp">harrybp</a>',
+            text2: ' -<a href="https://github.com/harrybp">harrybp</a>',
+            seperate: false
           },
+          ''
         ]
       },
       ],
@@ -57,8 +59,8 @@ var website = {
             'Just some HTML5 games made by me in my spare time..',
             {
               type: 'columns',
-              text1: '- Zombie Run \n A side scrolling run-and-shoot type game. My first attempt at building a HTML5 game. \n <a href="#" onclick=openPopup("1")>Click</a> to Play',
-              text2: '- Bounce \n Keep the ball from escaping! My second game, simpler but more mathematically complex. \n <a href="#" onclick=openPopup("2")>Click</a> to Play'
+              text1: '- Zombie Run \n A side scrolling run-and-shoot type game. My first attempt at building a HTML5 game. \n <a href="games/tiles.html">Click</a> to Play',
+              text2: '- Bounce \n Keep the ball from escaping! My second game, simpler but more mathematically complex. \n <a href="games/rotate.html">Click</a> to Play'
             },
             'Check my <a href="https://github.com/harrybp">github</a> for more stuff'
           ]
