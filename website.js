@@ -11,7 +11,7 @@ var website = {
         tabName: 'Info',
         title: 'Information',
         content: [
-          'I am a 20 year old Computer Science student from <a href="#" onmouseenter=openPopover("uom")>UoM</a> in my final year of studies after a placement position at HSBC in Hong Kong. I am interested in developer roles in a fast paced company.',
+          'I am a 20 year old Computer Science student from <a href="#" onmouseenter=openPopover("uom")>UoM</a> in my final year of studies after a placement position at HSBC in Hong Kong. I am interested in developer roles.',
         ]
       },
       {
