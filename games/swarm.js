@@ -41,11 +41,13 @@ class Boid {
     this.thinkTimer = Math.floor(Math.random()*10);
     this.angle = this.vel.getAngle();
     this.smoothAmount = 10*Math.PI/180
+    this.colour = '#019474';
   }
 
   update() {
     this.thinkTimer = (this.thinkTimer + 1) % 5;
-    this.wrap();
+    if(wrap)
+      this.wrap();
     if(this.thinkTimer == 0)
       this.getFriends();
     this.flock();
@@ -66,12 +68,15 @@ class Boid {
 
   flock() {
     var noise = new Vector(2*Math.random() - 1, 2*Math.random() -1);
+    //noise.divide(2)
     this.vel.add(noise);
     this.vel.limit(maxSpeed);
     this.vel.add(this.getAverageDirection())
     this.vel.add(this.getAvoidDirection())
     this.vel.add(this.getCoheseDirection())
     this.vel.add(this.getAvoidBarriersDirection())
+    if(!wrap)
+      this.vel.add(this.getAvoidEdgeDirection())
   }
 
   wrap(){
@@ -152,6 +157,42 @@ class Boid {
 
   }
 
+  getAvoidEdgeDirection(){
+    if(this.pos.x < 0){
+      this.pos.x = 0;
+    } else if(this.pos.x > totalWidth){
+      this.pos.x = totalWidth;
+    }
+    if(this.pos.y < 0){
+      this.pos.y = 0;
+    } else if(this.pos.y > totalHeight){
+      this.pos.y = totalHeight;
+    }
+    var sum = new Vector(0,0);
+    var dist = 1;
+    if(this.pos.x < avoidRadius){
+      sum.add(new Vector(1,0))
+      dist = this.pos.x;
+    } else if(this.pos.x > totalWidth-avoidRadius){
+      sum.add(new Vector(-1,0));
+      dist = totalWidth - this.pos.x;
+    }
+    if(this.pos.y < avoidRadius){
+      sum.add(new Vector(0,1))
+      dist = this.pos.y;
+    } else if(this.pos.y > totalHeight-avoidRadius){
+      sum.add(new Vector(0,-1));
+      dist = totalHeight- this.pos.y;
+    }
+    //console.log(dist)
+    dist = dist / 4;
+    if(dist > 0)
+      sum.divide(dist)
+
+    return sum;
+
+  }
+
   draw(){
     var angle = this.vel.getAngle();
     if(this.angle < angle){
@@ -159,7 +200,7 @@ class Boid {
     } else if(this.angle > angle) {
       this.angle -= this.smoothAmount;
     }
-    ctx.fillStyle = '#019474'
+    ctx.fillStyle = this.colour;
     ctx.translate(this.pos.x, this.pos.y);
     ctx.rotate(this.angle);
     ctx.beginPath();
@@ -190,6 +231,7 @@ init();
 
 
 function init() {
+  wrap = false
   boids = [];
   barriers = [];
   frameLength = 15;
@@ -209,10 +251,18 @@ function init() {
 }
 
 function update(){
-  ctx.clearRect(0,0,totalWidth,totalHeight);
   for(var x = 0; x < boids.length; x++){
     var boid = boids[x];
     boid.update();
+  }
+  if(count % 10 == 0)
+    friendClustering();
+}
+
+function draw(){
+  ctx.clearRect(0,0,totalWidth,totalHeight);
+  for(var x = 0; x < boids.length; x++){
+    var boid = boids[x];
     boid.draw();
   }
   for(var x = 0; x < barriers.length; x++){
@@ -221,20 +271,29 @@ function update(){
   }
 }
 
+var maxFPS = 60;
+var lastFrameTimeMs = 0;
+var delta = 0;;
+var timestep = 20;
 var count = 0;
-var start = null;
-window.requestAnimationFrame(step);
-function step(timestamp){
-  count++;
-  if(!start) start = timestamp;
-  var progress = timestamp - start;
-  if(progress > frameLength){
-    start = timestamp;
-    update();
-
+function mainLoop(timestamp) {
+  // Throttle the frame rate.    
+  if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
+      requestAnimationFrame(mainLoop);
+      return;
   }
-  window.requestAnimationFrame(step);
+  count++;
+  delta += timestamp - lastFrameTimeMs;
+  lastFrameTimeMs = timestamp;
+  while (delta >= timestep) {
+    update();
+    delta -= timestep;
+  }
+  draw();
+  requestAnimationFrame(mainLoop);
 }
+
+requestAnimationFrame(mainLoop);
 
 var clicked = false;
 function getMouseDown(event){ count = 7; clicked = true; getMouseMove(event); }
@@ -258,6 +317,7 @@ function getMouseMove(event){
 }
 function addBoid(loc){
   var newBoid = new Boid(loc);
+  newBoid.colour = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
   boids.push(newBoid);
 }
 function getMousePos(canvas, evt) {
@@ -293,3 +353,45 @@ function kill(pos){
     }
   }
 }
+
+
+function friendClustering(){
+  var boidCopy = boids.slice();
+  //order by frirends
+  boidCopy.sort(function(a,b){
+    return b.friends.length - a.friends.length;
+  })
+  for(var x = 0; x< boidCopy.length; x++){
+    var boid = boidCopy[x];
+    boid.checked = false;
+  }
+  var prevColours = [];
+  for(var x = 0; x< boidCopy.length; x++){
+    var boid = boidCopy[x];
+    var colour = boid.colour;
+    if(prevColours.indexOf(colour) >= 0){
+      colour = '#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6);
+    }
+    prevColours.push(colour);
+    if(!boid.checked)
+      colourFriends(boid, colour);
+  }
+}
+
+function colourFriends(boid, colour){
+  boid.checked = true;
+  boid.colour = colour;
+  for(var i = 0; i < boid.friends.length; i++){
+    var friend = boid.friends[i];
+    if(!friend.checked){
+      colourFriends(friend, colour);
+    }
+  }
+}
+
+//todo
+//split clustering task up frame by frame
+//cluster recursively by looking at friends
+
+
+
