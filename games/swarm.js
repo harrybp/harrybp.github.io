@@ -40,7 +40,7 @@ class Boid {
     this.friends = [];
     this.thinkTimer = Math.floor(Math.random()*10);
     this.angle = this.vel.getAngle();
-    this.smoothAmount = 10*Math.PI/180
+    this.smoothAmount = 25*Math.PI/180
     this.colour = '#019474';
   }
 
@@ -170,17 +170,17 @@ class Boid {
     }
     var sum = new Vector(0,0);
     var dist = 1;
-    if(this.pos.x < avoidRadius){
+    if(this.pos.x < wallAvoidRadius){
       sum.add(new Vector(1,0))
       dist = this.pos.x;
-    } else if(this.pos.x > totalWidth-avoidRadius){
+    } else if(this.pos.x > totalWidth-wallAvoidRadius){
       sum.add(new Vector(-1,0));
       dist = totalWidth - this.pos.x;
     }
-    if(this.pos.y < avoidRadius){
+    if(this.pos.y < wallAvoidRadius){
       sum.add(new Vector(0,1))
       dist = this.pos.y;
-    } else if(this.pos.y > totalHeight-avoidRadius){
+    } else if(this.pos.y > totalHeight-wallAvoidRadius){
       sum.add(new Vector(0,-1));
       dist = totalHeight- this.pos.y;
     }
@@ -196,9 +196,15 @@ class Boid {
   draw(){
     var angle = this.vel.getAngle();
     if(this.angle < angle){
-      this.angle += this.smoothAmount;
+      if(this.angle + this.smoothAmount < angle)
+        this.angle += this.smoothAmount;
+      else 
+        this.angle = angle;
     } else if(this.angle > angle) {
-      this.angle -= this.smoothAmount;
+       if(this.angle - this.smoothAmount > angle)
+        this.angle -= this.smoothAmount;
+      else 
+        this.angle = angle;
     }
     ctx.fillStyle = this.colour;
     ctx.translate(this.pos.x, this.pos.y);
@@ -239,15 +245,20 @@ function init() {
   friendRadius = 60;
   crowdRadius = friendRadius / 2;
   avoidRadius = 20;
+  wallAvoidRadius = 100;
   mode = 'p'
   canvas = document.getElementById('canvas');
+  console.log(canvas.scrollWidth);
   canvas.addEventListener("mousedown", getMouseDown);
   document.addEventListener('mouseup', getMouseUp)
   canvas.addEventListener('mousemove', getMouseMove)
+  totalWidth = canvas.scrollWidth;
+  totalHeight = window.innerHeight;
   canvas.width = totalWidth;
   canvas.height = totalHeight;
+  canvas.style.height = totalHeight + 'px'
   ctx = canvas.getContext("2d");
-  addXBoidsRandomly(1)
+  addXBoidsRandomly(40)
 }
 
 function update(){

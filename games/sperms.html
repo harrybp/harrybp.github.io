@@ -3,20 +3,47 @@
 <head>
   <style type="text/css">
     canvas {
-      
-      border: 1px solid blue;
-
+      width: 100%;
+      height: 100%;
+      border: solid black;
+      border-width: 0px 2px 0px 2px;
     }
+    html, body {margin: 0; height: 100%; overflow: hidden}
   </style>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-	<canvas id='canvas'></canvas>
-  <form action="">
-    <input type="radio" name="brush" value="p" onchange='radios("p")' checked> Paint 
-    <input type="radio" name="brush" value="e" onchange='radios("e")'> Erase 
-    <input type="radio" name="brush" value="b" onchange='radios("b")'> Make babies
-    <input type="radio" name="brush" value="k" onchange='radios("k")'> Kill
-  </form>
+  <div class="container-fluid">
+    <div class="row", stlye="height: 100%">
+      <div class='col-8'>
+        <canvas id='canvas'></canvas>
+      </div>
+      <div class='col-4'>
+        <br>
+        <h3>Controls</h3>
+        <h5>Barriers</h5>
+          <input type="radio" name="brush" value="p" onchange='radios("p")' checked> Paint <br>
+          <input type="radio" name="brush" value="e" onchange='radios("e")'> Erase <br>
+        <h5>Creatures</h5>  
+          <input type="radio" name="brush" value="b" onchange='radios("b")'> Create <br>
+          <input type="radio" name="brush" value="k" onchange='radios("k")'> Kill
+        <br><br>
+        <h3>Settings</h3>
+          <input type="checkbox" onchange='toggleWrap()'> Wrap <br>
+          <input type="checkbox" onchange='toggleCohese()' checked> Cohese <br>
+          <input type="checkbox" onchange='toggleAvoidBoids()' checked> Avoid Others <br>
+          <input type="checkbox" onchange='toggleAvoidBarriers()' checked> Avoid Barriers <br><br>
+          <btn class='btn btn-danger' onclick='clear()'>Clear</btn>
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+
+	
+  
   <script src='swarm.js'></script>
 </body>
 </html>
