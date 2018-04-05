@@ -15,15 +15,15 @@
 <body>
   <div class="container-fluid">
     <div class="row", stlye="height: 100%">
-      <div class='col-8'>
+      <div class='col-10'>
         <canvas id='canvas'></canvas>
       </div>
-      <div class='col-4'>
+      <div class='col-2'>
         <br>
         <h3>Controls</h3>
         <h5>Barriers</h5>
           <input type="radio" name="brush" value="p" onchange='radios("p")' checked> Paint <br>
-          <input type="radio" name="brush" value="e" onchange='radios("e")'> Erase <br>
+          <input type="radio" name="brush" value="e" onchange='radios("e")'> Erase <br><br>
         <h5>Creatures</h5>  
           <input type="radio" name="brush" value="b" onchange='radios("b")'> Create <br>
           <input type="radio" name="brush" value="k" onchange='radios("k")'> Kill
@@ -32,8 +32,9 @@
           <input type="checkbox" onchange='toggleWrap()'> Wrap <br>
           <input type="checkbox" onchange='toggleCohese()' checked> Cohese <br>
           <input type="checkbox" onchange='toggleAvoidBoids()' checked> Avoid Others <br>
-          <input type="checkbox" onchange='toggleAvoidBarriers()' checked> Avoid Barriers <br><br>
-          <btn class='btn btn-danger' onclick='clear()'>Clear</btn>
+          <input type="checkbox" onchange='toggleAvoidBarriers()' checked> Avoid Barriers <br>
+          <input type="checkbox" onchange='toggleAverageDirection()' checked> Average Direction <br><br>
+          <btn onclick='clearAll()' href='#' class='btn btn-danger' >Clear</btn>
       </div>
     </div>
   </div>

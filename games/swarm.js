@@ -71,10 +71,14 @@ class Boid {
     //noise.divide(2)
     this.vel.add(noise);
     this.vel.limit(maxSpeed);
-    this.vel.add(this.getAverageDirection())
-    this.vel.add(this.getAvoidDirection())
-    this.vel.add(this.getCoheseDirection())
-    this.vel.add(this.getAvoidBarriersDirection())
+    if(avgDirection)
+      this.vel.add(this.getAverageDirection())
+    if(avoidOthers)
+      this.vel.add(this.getAvoidDirection())
+    if(cohese)
+      this.vel.add(this.getCoheseDirection())
+    if(avoidBarriers)
+      this.vel.add(this.getAvoidBarriersDirection())
     if(!wrap)
       this.vel.add(this.getAvoidEdgeDirection())
   }
@@ -237,7 +241,11 @@ init();
 
 
 function init() {
-  wrap = false
+  wrap = false;
+  cohese = true;
+  avoidOthers = true;
+  avoidBarriers = true;
+  avgDirection = true;
   boids = [];
   barriers = [];
   frameLength = 15;
@@ -400,9 +408,14 @@ function colourFriends(boid, colour){
   }
 }
 
-//todo
-//split clustering task up frame by frame
-//cluster recursively by looking at friends
-
-
+function toggleWrap() { wrap = !wrap; }
+function toggleCohese() { cohese = !cohese; }
+function toggleAvoidBoids() { avoidOthers = !avoidOthers; }
+function toggleAvoidBarriers() { avoidBarriers = !avoidBarriers; }
+function toggleAverageDirection() { avgDirection = !avgDirection; }
+function clearAll() {
+  console.log('d')
+  boids = [];
+  barriers = [];
+}
 
