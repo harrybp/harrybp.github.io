@@ -11,7 +11,8 @@ var website = {
         tabName: 'Info',
         title: 'Information',
         content: [
-          'I am a 20 year old Computer Science student from <a href="#" onmouseenter=openPopover("uom")>UoM</a> in my final year of studies after a placement position at HSBC in Hong Kong. I am interested in developer roles.',
+          'I am a 20 year old Computer Science student from <a href="#" onmouseenter=openPopover("uom")>UoM</a> in my final year of studies after a placement position at HSBC in Hong Kong.',
+          ''
         ]
       },
       {
@@ -59,8 +60,8 @@ var website = {
             'Just some HTML5 games made by me in my spare time..',
             {
               type: 'columns',
-              text1: '- Zombie Run \n A side scrolling run-and-shoot type game. My first attempt at building a HTML5 game. \n <a href="games/tiles.html">Click</a> to Play',
-              text2: '- Bounce \n Keep the ball from escaping! My second game, simpler but more mathematically complex. \n <a href="games/rotate.html">Click</a> to Play'
+              text1: '- Zombie Run \n A side scrolling run-and-shoot type game. My first attempt at building a HTML5 game.\n <a href="games/tiles.html">Click</a> to Play',
+              text2: '- Bounce \n Keep the ball from escaping! My second game, built during downtime in my placement year.\n <a href="games/rotate.html">Click</a> to Play'
             },
             'Check my <a href="https://github.com/harrybp">github</a> for more stuff'
           ]
