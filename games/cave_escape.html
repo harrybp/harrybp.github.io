@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .game-container {
+            background-color: black;
+            position: absolute;
+        }
+        .side-bar {
+            background-color: gray;
+            position: absolute;
+        }
+        .side-bar-contents {
+            padding: 15px;
+        }
+        .fullscreen {
+            background: green;
+        }
+        #output {
+            width: 100%;
+        }
+        body {
+            background-image: url('cave_escape_data/images/floor.png');
+        }
+    </style>
+</head>
+<body id="window">
+
+    <canvas class="game-container" id="game-container"></canvas>
+    <div class="side-bar" id="side-bar">
+        <div class="side-bar-contents">
+            <p onclick="fullscreen()" class="fullscreen">Fullscreen</p>
+            <textarea id="output" rows="4"></textarea>
+            <p><a href="../index.html">Go Back</a> </p>
+        </div>
+    </div>
+
+    <script>
+
+        // For toggling fullscreen mode
+        var fullscreen_enabled = false;
+        function fullscreen(){
+            fullscreen_enabled = true;
+            var game_container = document.getElementById('game-container');
+            game_container.style.left = "0px";
+            game_container.style.top = "0px";
+            Module.requestFullscreen(true, true);
+        }
+
+        // Setup the game
+        var Module = {
+            preRun: [],
+            postRun: [],
+            print: (function() {
+                var element = document.getElementById('output');
+                return function(text) {
+                    element.value += text + "\n";
+                    element.scrollTop = element.scrollHeight;
+                };
+            })(),
+            printErr: function(text) {
+                if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                if (0) {
+                    dump(text + '\n');
+                }
+            },
+            canvas: (function() {
+                var canvas = document.getElementById('game-container');
+                var height = window.innerHeight;
+                var width = window.innerWidth;
+                var smallest = (height < width)? height : width;
+                var game_size = smallest * 0.85;
+                //canvas.width = game_size;
+                //canvas.height = game_size;
+                return canvas;
+            })()
+        };
+
+        // For adjusting the dimensions on a screen size change
+        function reshape(){
+
+            // Avoid immediately reverting the fullscreen
+            if(fullscreen_enabled){
+                fullscreen_enabled = false;
+                return;
+            }
+
+            var height = window.innerHeight;
+            var width = window.innerWidth;
+            var smallest = (height < width)? height : width;
+
+            var game_size = smallest * 0.85;
+            var side_size = smallest * 0.15;;
+            if((width - game_size) > (width * 0.2)){
+                side_size = width * 0.2;
+            }
+            var x_pos = (width - game_size - side_size) / 2;
+            var y_pos = (height - game_size) / 2;
+
+            var game_container = document.getElementById('game-container');
+            var side_bar = document.getElementById('side-bar');
+
+            game_container.style.width = game_size + "px";
+            game_container.style.height = game_size + "px";
+            game_container.style.left = x_pos + "px";
+            game_container.style.top = y_pos + "px";
+            Module.canvas.width = game_size;
+            Module.canvas.height = game_size;
+
+            side_bar.style.left = x_pos + game_size + 5 + "px";
+            side_bar.style.top = y_pos + "px";
+            side_bar.style.width = side_size + "px";
+            side_bar.style.height = game_size + "px";
+
+        }
+        reshape();
+        window.onresize = reshape;
+    </script>
+    <script src="cave_escape.js"></script>
+</body>
+</html>
