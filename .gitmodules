@@ -1,0 +1,3 @@
+[submodule "other/triangle-pattern-gen"]
+	path = other/triangle-pattern-gen
+	url = https://github.com/harrybp/triangle-pattern-gen.git
